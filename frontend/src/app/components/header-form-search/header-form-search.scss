@@ -1,0 +1,81 @@
+@import '../../../styles/variables/variables';
+
+.header-form-search {
+
+  &__field {
+    position: relative;
+
+    &:after {
+      position: absolute;
+      display: block;
+      width: 40px;
+      height: 40px;
+      top: 0;
+      right: 0;
+      content: '';
+      cursor: pointer;
+      background-image: url('../../../assets/icons/search.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 50% 50%;
+    }
+  }
+
+  &__input {
+    display: block;
+    box-sizing: border-box;
+    margin: 0 auto;
+    height: 40px;
+    width: 100%;
+    padding:0 50px 0 10px;
+    background-color: $clear-black-color;
+    color: $main-font-color;
+    border-bottom: 2px solid $main-contrast-color;
+  }
+
+  &__options {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    margin-top: 20px;
+    text-transform: uppercase;
+  }
+
+  &__options-title {
+    margin-right: 10px;
+  }
+
+  &__options-list {
+    display: flex;
+  }
+
+  &__options-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $btn-disable;
+    height: 22px;
+    padding: 0 20px;
+    border-radius: 2px;
+    margin-right: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      background-color: $main-contrast-color;
+    }
+
+    &--active {
+      background-color: $main-contrast-color;
+
+      &:hover {
+        background-color: $main-contrast-color-hover;
+      }
+    }
+  }
+}
