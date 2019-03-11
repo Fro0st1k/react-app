@@ -7,4 +7,3 @@ export const HeaderFormSearchOptionsListItem = ({optionName, isActive, selectOpt
       : <li onClick={(e) => selectOption(optionName, e)} className='header-form-search__options-list-item'>{optionName}</li>
   )
 };
-
