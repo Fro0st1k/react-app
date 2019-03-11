@@ -1,6 +1,20 @@
 @import '../../../styles/variables/variables';
 
-.header-form-search {
+.search-form {
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: $main-font-color;
+  max-width: 1040px;
+  width: 100%;
+  z-index: 1;
+
+  &__title {
+    font-size: 18px;
+    margin: 0 auto 30px auto;
+    text-transform: uppercase;
+  }
 
   &__field {
     position: relative;

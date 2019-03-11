@@ -5,6 +5,10 @@
   background-size: cover;
   padding: 20px 0;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   &__title {
     position: relative;
@@ -13,7 +17,8 @@
     font-weight: 500;
     z-index: 1;
     max-width: 1040px;
-    margin: 0 auto 10px auto;
+    width: 100%;
+    margin: 0 0 10px;
   }
 
   &__shading {
