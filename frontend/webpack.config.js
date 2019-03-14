@@ -2,6 +2,11 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+
+const prodMode = process.env.NODE_ENV === "production";
 
 module.exports = {
   entry: {
@@ -19,9 +24,24 @@ module.exports = {
         use: ['babel-loader']
       },
       {
-        test: /\.(css|scss)$/,
-        exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        test: /\.html$/,
+        use: [{
+          loader: 'html-loader',
+          options: {
+            minimize: prodMode,
+            removeComments: prodMode,
+            collapseWhitespace: prodMode
+          }
+        }]
+      },
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          prodMode ? MiniCssExtractPlugin.loader : 'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ]
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
@@ -36,7 +56,7 @@ module.exports = {
           {
             loader: 'image-webpack-loader',
             options: {
-              disable: true,
+              disable: !prodMode,
               mozjpeg: {
                 progressive: true,
                 quality: 65
@@ -57,16 +77,29 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx']
   },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: prodMode
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'index.html')
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "styles.css"
+    })
   ],
   devServer: {
     port: 5555,
     hot: true
   },
-  devtool: 'inline-source-map',
+  devtool: prodMode ? '' : 'inline-source-map',
 };
