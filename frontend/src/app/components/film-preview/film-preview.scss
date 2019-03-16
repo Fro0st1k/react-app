@@ -1,0 +1,48 @@
+@import '../../../styles/variables/variables';
+
+.film-preview {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  font-size: 14px;
+  width: 240px;
+  color: black;
+
+  &__img {
+    height: 340px;
+    width: 240px;
+    background-color: $img-placeholder-color;
+  }
+
+  &__description {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 50px;
+    padding: 5px;
+  }
+
+  &__description-title {
+    position: absolute;
+    top: 12px;
+    left: 5px;
+    font-size: 16px;
+    max-width: 190px;
+  }
+
+  &__description-year {
+    border: 1px solid $border-color;
+    border-radius: 2px;
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    padding: 2px 5px 1px;
+    user-select: none;
+  }
+
+  &__description-genre {
+    color: $silver-font-color;
+    margin-top: 35px;
+  }
+}

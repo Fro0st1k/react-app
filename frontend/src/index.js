@@ -2,17 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/styles.scss';
 
-import { Header } from './app/components/header/header';
-
-// will be del after task1
-const TestComponent = React.createElement('div',null, 'qwerty');
+import { MainPage } from "./app/pages/main-page";
 
 const App = () => {
   return (
-    <>
-      <Header/>
-      {TestComponent}
-    </>
+    <MainPage/>
   )
 };
 

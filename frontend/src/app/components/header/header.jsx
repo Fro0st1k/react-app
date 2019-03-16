@@ -4,6 +4,7 @@ import './header.scss';
 import { SearchForm } from '../search-form/search-form';
 import { SearchField } from '../search-form/search-field/search-field';
 import { SearchOptions } from '../search-form/search-options/search-options';
+import { ContentWrapper } from '../shared/content-wrapper/content-wrapper';
 
 export class Header extends React.Component {
   constructor(props) {
@@ -24,7 +25,6 @@ export class Header extends React.Component {
   }
 
   selectOption(selectOptionId) {
-    console.log(selectOptionId);
     this.setState(state => {
       return state.selectedOptionId = selectOptionId;
     })
@@ -34,11 +34,13 @@ export class Header extends React.Component {
     return (
       <div className='header'>
         <div className='header__shading'/>
-        <div className='header__title'>Film library</div>
-        <SearchForm title='find your movie' sendForm={this.sendForm}>
-          <SearchField/>
-          <SearchOptions {...this.state} selectOption={this.selectOption}/>
-        </SearchForm>
+        <ContentWrapper direction='column'>
+          <div className='header__title'>Film library</div>
+          <SearchForm title='find your movie' sendForm={this.sendForm}>
+            <SearchField/>
+            <SearchOptions {...this.state} selectOption={this.selectOption}/>
+          </SearchForm>
+        </ContentWrapper>
       </div>
     );
   }

@@ -1,0 +1,11 @@
+.content-wrapper {
+  max-width: 1040px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  height: inherit;
+
+  &--column {
+    flex-direction: column;
+  }
+}

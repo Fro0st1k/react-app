@@ -1,22 +1,16 @@
 import React from 'react';
-import { SearchOptionsItem } from '../search-options-item/search-options-item';
+import { List } from '../../shared/list/list';
 
 export const SearchOptions = ({searchOptionsList, selectedOptionId, selectOption}) => {
-
   return (
     <div className='search-form__options'>
       <span className='search-form__options-title'>search by</span>
-      <ul className='search-form__options-list'>
-        {searchOptionsList.map((optionName, index) => {
-          return <SearchOptionsItem
-            key={'SOId_' + index}
-            isActive={selectedOptionId === index}
-            optionName={optionName}
-            selectedOptionId={index}
-            onClick={selectOption}
-          />
-        })}
-      </ul>
+      <List itemList={searchOptionsList}
+            listClassName='search-form__options-list'
+            itemClassName='search-form__options-list-item'
+            selectedItemId={selectedOptionId}
+            selectItem={selectOption}
+      />
     </div>
   )
 };
