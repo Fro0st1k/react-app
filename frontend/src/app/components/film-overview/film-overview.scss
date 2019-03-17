@@ -1,0 +1,63 @@
+@import '../../../styles/variables/variables';
+
+.film-overview {
+  position: relative;
+  display: flex;
+  z-index: 1;
+  background-image: url('../../../assets/placeholders/header.jpg');
+  background-size: cover;
+  color: $main-font-color;
+
+  &__poster {
+    display: block;
+    min-width: 240px;
+    height: 340px;
+    background-color: rgb(198, 194, 195);
+    margin: 20px;
+  }
+
+  &__description {
+    margin: 20px;
+    padding: 30px 0;
+  }
+
+  &__title {
+    font-size: 26px;
+    font-weight: 500;
+    color: $contrast-font-color;
+    display: flex;
+    align-items: center;
+  }
+
+  &__rating {
+    display: inline-block;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 1px 5px;
+    border: 1px solid $main-contrast-color;
+    border-radius: 2px;
+    margin: 0 0 2px 20px;
+  }
+
+  &__stats {
+    display: flex;
+  }
+
+  &__tagline {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 5px 0;
+  }
+
+  &__year {
+    margin-right: 30px;
+  }
+
+  &__duration {}
+
+  &__story {
+    padding: 5px 0;
+    font-size: 16px;
+  }
+}

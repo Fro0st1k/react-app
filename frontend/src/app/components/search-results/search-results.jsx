@@ -36,8 +36,8 @@ export class SearchResults extends React.Component {
     } else {
       return (
         <div className='search-results'>
-          {this.state.filmList.map((filmInfo, index) => {
-            return <FilmPreview key={index} filmInfo={filmInfo}/>
+          {this.state.filmList.map(filmInfo => {
+            return <FilmPreview key={filmInfo.id} filmInfo={filmInfo}/>
           })}
         </div>
       )

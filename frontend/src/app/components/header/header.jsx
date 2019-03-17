@@ -21,6 +21,7 @@ export class Header extends React.Component {
 
   sendForm(event) {
     event.preventDefault();
+    console.log(this);
     console.log('request sent');
   }
 
@@ -33,7 +34,7 @@ export class Header extends React.Component {
   render() {
     return (
       <div className='header'>
-        <div className='header__shading'/>
+        <div className='shading'/>
         <ContentWrapper direction='column'>
           <div className='header__title'>Film library</div>
           <SearchForm title='find your movie' sendForm={this.sendForm}>

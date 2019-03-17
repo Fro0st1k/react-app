@@ -59,7 +59,7 @@ module.exports = {
               disable: !prodMode,
               mozjpeg: {
                 progressive: true,
-                quality: 65
+                quality: 80
               },
               pngquant: {
                 quality: '65-90',

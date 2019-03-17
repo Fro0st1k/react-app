@@ -1,13 +1,12 @@
 import React from 'react';
 import './film-preview.scss';
 
+function trimReleaseDate(relDate) {
+  const yearMonthDay = relDate.split('-');
+  return yearMonthDay[0];
+}
+
 export const FilmPreview = ({filmInfo: {title, poster_path, release_date, genres}}) => {
-
-  function trimReleaseDate(relDate) {
-    const yearMonthDay = relDate.split('-');
-    return yearMonthDay[0];
-  }
-
   return (
     <a className='film-preview' href='#'>
       <img className='film-preview__img' src={poster_path} alt={title}/>
