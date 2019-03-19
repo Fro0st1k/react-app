@@ -24,11 +24,10 @@
   }
 
   &__description-title {
-    position: absolute;
-    top: 12px;
-    left: 5px;
     font-size: 16px;
-    max-width: 190px;
+    max-width: 187px;
+    height: 35px;
+    margin-top: 6px;
   }
 
   &__description-year {
@@ -43,6 +42,5 @@
 
   &__description-genre {
     color: $silver-font-color;
-    margin-top: 35px;
   }
 }

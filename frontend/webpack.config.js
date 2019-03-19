@@ -14,7 +14,8 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -99,7 +100,8 @@ module.exports = {
   ],
   devServer: {
     port: 5555,
-    hot: true
+    hot: true,
+    historyApiFallback: true
   },
   devtool: prodMode ? '' : 'inline-source-map',
 };
