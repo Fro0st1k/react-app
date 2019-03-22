@@ -2,7 +2,6 @@ import React from 'react';
 import './search-results.scss';
 import Axios from 'axios';
 
-
 import { FilmPreview } from '../film-preview/film-preview';
 
 export class SearchResults extends React.Component {

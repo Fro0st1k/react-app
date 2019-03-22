@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
 import './styles/styles.scss';
 
@@ -9,10 +9,10 @@ import { FilmPage } from "./app/pages/film-page";
 
 const App = () => {
   return (
-    <Router>
-      <Route exact path="/" component={MainPage}/>
-      <Route path="/movies" component={FilmPage}/>
-    </Router>
+   <Router>
+     <Route exact path="/" component={MainPage}/>
+     <Route path="/movies/:id" render={(props) => <FilmPage {...props}/>}/>
+   </Router>
   )
 };
 
