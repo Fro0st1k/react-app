@@ -9,7 +9,7 @@ function trimReleaseDate(relDate) {
 
 export const FilmPreview = ({filmInfo: {title, poster_path, release_date, genres, id}}) => {
   return (
-    <Link to={`/movies/${id}`}>
+    <Link to={{pathname: `/movies/${id}`}}>
       <div className='film-preview'>
         <img className='film-preview__img' src={poster_path} alt={title}/>
         <div className='film-preview__description'>

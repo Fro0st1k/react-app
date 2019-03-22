@@ -11,21 +11,16 @@ export class FilmPage extends React.Component {
     super(props);
     this.state = {
       filmInfo: {},
-      filmSameGenre: {}
+      filmSameGenre: []
     };
   }
 
   componentDidMount() {
-    console.log('didMount');
     this.getFilm(this.props.match.params.id);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(prevProps);
-    console.log(this.props);
-    console.log('didUpdate');
     if (this.props.match.params.id !== prevProps.match.params.id) {
-
       this.getFilm(this.props.match.params.id);
     }
   }
@@ -37,8 +32,8 @@ export class FilmPage extends React.Component {
   }
 
   getFilmsTheSameCategory() {
-    // Axios.get(`http://react-cdp-api.herokuapp.com/movies?filter[genre]=Comedy`)
-    //   .then(res => console.log(res.data))
+    Axios.get(`http://react-cdp-api.herokuapp.com/movies?filte=Animation&filte=Family`)
+      .then(res => console.log(res.data))
   }
 
   render() {

@@ -24,7 +24,7 @@ export class SearchResults extends React.Component {
   }
 
   getFilms() {
-    Axios.get('http://react-cdp-api.herokuapp.com/movies', {cancelToken: this.cancelToken.token})
+    Axios.get('http://react-cdp-api.herokuapp.com/movies?limit=32', {cancelToken: this.cancelToken.token})
       .then(response => this.setState({ filmList: response.data.data }))
       .catch((err) => { console.log('Error: ', err) });
   }

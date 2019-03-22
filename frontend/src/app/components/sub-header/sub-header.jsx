@@ -3,7 +3,7 @@ import './sub-header.scss';
 import { ContentWrapper } from '../shared/content-wrapper/content-wrapper';
 import { SortOptions } from '../sort-options/sort-options';
 
-export class SubHeader extends React.PureComponent {
+export class SubHeader extends React.Component {
   constructor(props) {
     super(props);
 
