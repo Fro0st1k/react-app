@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 export const ContentWrapper = (props) => {
   const calcClassName = classNames(
-      'content-wrapper', {
+      "content-wrapper", {
       [`content-wrapper--${props.direction}`]: props.direction
     });
 

@@ -23,10 +23,11 @@ export class SubHeader extends React.Component {
 
   render() {
     return (
-      <div className='sub-header'>
+      <div className="sub-header">
         <ContentWrapper>
-          <div className='sub-header__content'>
-            <div className='sub-header__info'>7 movies found</div>
+          <div className="sub-header__content">
+            {this.props.numberFoundFilms ? <div className="sub-header__info">{this.props.numberFoundFilms} movies found</div> : ''}
+            {this.props.filmGenre ? <div className="sub-header__info">Films by {this.props.filmGenre} genre</div> : ''}
             <SortOptions {...this.state} selectOption={this.selectOption}/>
           </div>
         </ContentWrapper>

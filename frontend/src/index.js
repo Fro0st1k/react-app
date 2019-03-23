@@ -1,14 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter as Router, Route, Switch, createBrowserHistory } from "react-router-dom";
-// import { createBrowserHistory } from 'history';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import './styles/styles.scss';
 
-import { MainPage } from "./app/pages/main-page";
-import { FilmPage } from "./app/pages/film-page";
-import { Footer } from "./app/components/footer/footer";
-
-// export const history = createBrowserHistory();
+import { MainPage } from './app/pages/main-page';
+import { FilmPage } from './app/pages/film-page';
+import { Footer } from './app/components/footer/footer';
 
 const App = () => {
   return (

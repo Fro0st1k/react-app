@@ -3,9 +3,6 @@
 .film-overview {
   position: relative;
   display: flex;
-  z-index: 1;
-  background-image: url('../../../assets/placeholders/header.jpg');
-  background-size: cover;
   color: $main-font-color;
 
   &__poster {

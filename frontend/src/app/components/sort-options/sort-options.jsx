@@ -5,11 +5,11 @@ import { List } from '../shared/list/list';
 
 export const SortOptions = ({sortOptionsList, selectedOptionId, selectOption}) => {
   return (
-    <div className='sort-options'>
-      <div className='sort-options__title'>sort by</div>
+    <div className="sort-options">
+      <div className="sort-options__title">sort by</div>
       <List itemList={sortOptionsList}
-            listClassName='sort-options__list'
-            itemClassName='sort-options__item'
+            listClassName="sort-options__list"
+            itemClassName="sort-options__item"
             selectedItemId={selectedOptionId}
             selectItem={selectOption}
       />

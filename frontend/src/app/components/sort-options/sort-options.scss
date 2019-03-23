@@ -2,6 +2,8 @@
 
 .sort-options {
   display: flex;
+  position: absolute;
+  right: 0;
 
   &__title {
     margin-right: 20px;
