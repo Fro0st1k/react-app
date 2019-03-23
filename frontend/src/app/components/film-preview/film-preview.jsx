@@ -5,7 +5,7 @@ import { trimReleaseDate } from '../../helpers/trim-release-date';
 
 export const FilmPreview = ({filmInfo: {title, poster_path, release_date, genres, id}}) => {
   return (
-    <Link to={{ pathname: `/movies/${id}`, state: {genre: genres[0]}}}>
+    <Link to={{ pathname: `/film/${id}`, state: {genre: genres[0]}}}>
       <div className="film-preview">
         <img className="film-preview__img" src={poster_path} alt={title}/>
         <div className="film-preview__description">

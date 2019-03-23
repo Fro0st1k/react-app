@@ -8,16 +8,22 @@ export class SubHeader extends React.Component {
     super(props);
 
     this.state = {
-      sortOptionsList: ['rating', 'date', 'A-Z'],
+      sortOptionsList: ['rating', 'date'],
       selectedOptionId: 0
     };
 
     this.selectOption = this.selectOption.bind(this);
   }
 
+  componentDidMount() {
+    this.selectOption(this.state.selectedOptionId);
+  }
+
   selectOption(selectOptionId) {
     this.setState(state => {
       return state.selectedOptionId = selectOptionId;
+    }, () => {
+      this.props.changeSort(this.state.sortOptionsList[selectOptionId]);
     });
   }
 

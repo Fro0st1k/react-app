@@ -4,15 +4,16 @@ import { BodyContent } from '../components/body-content/body-content';
 import { SearchResults } from '../components/search-results/search-results';
 import { FilmOverview } from '../components/film-overview/film-overview';
 import { Header } from '../components/header/header';
-
-import Axios from 'axios';
 import { ErrorBoundary } from '../components/error-bounadary/error-boundary';
+import Axios from 'axios';
 
 export class FilmPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filmInfo: {genres: []},
+      filmInfo: {
+        genres: []
+      },
       filmSameGenre: []
     };
   }

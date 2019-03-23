@@ -7,6 +7,7 @@ import { SearchField } from '../components/search-form/search-field/search-field
 import { SearchOptions } from '../components/search-form/search-options/search-options';
 import { SearchForm } from '../components/search-form/search-form';
 import { ErrorBoundary } from '../components/error-bounadary/error-boundary';
+import { trimReleaseDate } from '../helpers/trim-release-date';
 import Axios from 'axios';
 
 export class MainPage extends React.Component {
@@ -15,14 +16,16 @@ export class MainPage extends React.Component {
 
     this.state = {
       searchInputValue: '',
-      searchOptionsList: ['title', 'genres', 'qwerty'],
+      searchOptionsList: ['title', 'genres'],
       selectedOptionId: 0,
-      foundFilmList: []
+      foundFilmList: [],
+      sortedBy: ''
     };
 
     this.inputValueChange = this.inputValueChange.bind(this);
     this.searchFilm = this.searchFilm.bind(this);
     this.selectOption = this.selectOption.bind(this);
+    this.changeSort = this.changeSort.bind(this);
   }
 
   selectOption(selectOptionId) {
@@ -58,8 +61,35 @@ export class MainPage extends React.Component {
           limit: 32
         }
       })
-      .then(response => this.setState({ foundFilmList: response.data.data }))
+      .then(response => {
+        const sortedFilms = this.sortFilms(response.data.data, this.state.sortedBy);
+        this.setState({ foundFilmList: sortedFilms });
+      })
       .catch((err) => { console.log('Error: ', err) });
+  }
+
+  sortFilms(filmList, sortBy) {
+    // to-do map in sub-header
+    const sortOptions = {
+      rating: 'vote_average',
+      date: 'release_date'
+    };
+
+    const currentSortOpt = sortOptions[sortBy];
+    const needTrim = currentSortOpt === sortOptions.date;
+
+    return filmList.sort((a, b) => {
+      return needTrim
+        ? trimReleaseDate(b[currentSortOpt]) - trimReleaseDate(a[currentSortOpt])
+        : b[currentSortOpt] - a[currentSortOpt];
+    });
+  }
+
+  changeSort(sortBy) {
+    this.setState({
+      sortedBy: sortBy,
+      foundFilmList: this.sortFilms(this.state.foundFilmList, sortBy)
+    });
   }
 
   render() {
@@ -75,7 +105,7 @@ export class MainPage extends React.Component {
             />
           </SearchForm>
         </Header>
-        <SubHeader numberFoundFilms={this.state.foundFilmList.length}/>
+        <SubHeader changeSort={this.changeSort} numberFoundFilms={this.state.foundFilmList.length}/>
         <BodyContent>
           <SearchResults filmList={this.state.foundFilmList}/>
         </BodyContent>
