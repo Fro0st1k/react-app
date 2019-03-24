@@ -9,6 +9,7 @@ import { SearchForm } from '../components/search-form/search-form';
 import { ErrorBoundary } from '../components/error-bounadary/error-boundary';
 import { trimReleaseDate } from '../helpers/trim-release-date';
 import Axios from 'axios';
+import { SortOptions } from '../components/sort-options/sort-options';
 
 export class MainPage extends React.Component {
   constructor(props) {
@@ -16,22 +17,15 @@ export class MainPage extends React.Component {
 
     this.state = {
       searchInputValue: '',
-      searchOptionsList: ['title', 'genres'],
-      selectedOptionId: 0,
       foundFilmList: [],
-      sortedBy: ''
+      sortedBy: '',
+      searchBy: ''
     };
 
     this.inputValueChange = this.inputValueChange.bind(this);
     this.searchFilm = this.searchFilm.bind(this);
-    this.selectOption = this.selectOption.bind(this);
     this.changeSort = this.changeSort.bind(this);
-  }
-
-  selectOption(selectOptionId) {
-    this.setState(state => {
-      return state.selectedOptionId = selectOptionId;
-    })
+    this.changeSearchBy = this.changeSearchBy.bind(this);
   }
 
   searchFilm(event) {
@@ -46,7 +40,7 @@ export class MainPage extends React.Component {
 
   getOptionsForRequest() {
     return {
-      searchBy: this.state.searchOptionsList[this.state.selectedOptionId],
+      searchBy: this.state.searchBy,
       searchText: this.state.searchInputValue
     }
   }
@@ -69,7 +63,7 @@ export class MainPage extends React.Component {
   }
 
   sortFilms(filmList, sortBy) {
-    // to-do map in sub-header
+    // to-do map in sort-options
     const sortOptions = {
       rating: 'vote_average',
       date: 'release_date'
@@ -92,20 +86,22 @@ export class MainPage extends React.Component {
     });
   }
 
+  changeSearchBy(searchBy) {
+    this.setState({searchBy: searchBy});
+  }
+
   render() {
     return (
       <ErrorBoundary>
         <Header>
           <SearchForm title='find your movie' sendForm={this.searchFilm}>
             <SearchField onChange={this.inputValueChange}/>
-            <SearchOptions
-              searchOptionsList={this.state.searchOptionsList}
-              selectedOptionId={this.state.selectedOptionId}
-              selectOption={this.selectOption}
-            />
+            <SearchOptions changeSearchBy={this.changeSearchBy}/>
           </SearchForm>
         </Header>
-        <SubHeader changeSort={this.changeSort} numberFoundFilms={this.state.foundFilmList.length}/>
+        <SubHeader numberFoundFilms={this.state.foundFilmList.length}>
+          <SortOptions changeSort={this.changeSort}/>
+        </SubHeader>
         <BodyContent>
           <SearchResults filmList={this.state.foundFilmList}/>
         </BodyContent>
