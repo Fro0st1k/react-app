@@ -7,7 +7,6 @@ import { SearchField } from '../components/search-form/search-field/search-field
 import { SearchOptions } from '../components/search-form/search-options/search-options';
 import { SearchForm } from '../components/search-form/search-form';
 import { ErrorBoundary } from '../components/error-bounadary/error-boundary';
-import { trimReleaseDate } from '../helpers/trim-release-date';
 import Axios from 'axios';
 import { SortOptions } from '../components/sort-options/sort-options';
 
@@ -56,34 +55,13 @@ export class MainPage extends React.Component {
         }
       })
       .then(response => {
-        const sortedFilms = this.sortFilms(response.data.data, this.state.sortedBy);
-        this.setState({ foundFilmList: sortedFilms });
+        this.setState({ foundFilmList: response.data.data });
       })
       .catch((err) => { console.log('Error: ', err) });
   }
 
-  sortFilms(filmList, sortBy) {
-    // to-do map in sort-options
-    const sortOptions = {
-      rating: 'vote_average',
-      date: 'release_date'
-    };
-
-    const currentSortOpt = sortOptions[sortBy];
-    const needTrim = currentSortOpt === sortOptions.date;
-
-    return filmList.sort((a, b) => {
-      return needTrim
-        ? trimReleaseDate(b[currentSortOpt]) - trimReleaseDate(a[currentSortOpt])
-        : b[currentSortOpt] - a[currentSortOpt];
-    });
-  }
-
   changeSort(sortBy) {
-    this.setState({
-      sortedBy: sortBy,
-      foundFilmList: this.sortFilms(this.state.foundFilmList, sortBy)
-    });
+    this.setState({sortedBy: sortBy});
   }
 
   changeSearchBy(searchBy) {
@@ -103,7 +81,7 @@ export class MainPage extends React.Component {
           <SortOptions changeSort={this.changeSort}/>
         </SubHeader>
         <BodyContent>
-          <SearchResults filmList={this.state.foundFilmList}/>
+          <SearchResults filmList={this.state.foundFilmList} sortedBy={this.state.sortedBy}/>
         </BodyContent>
       </ErrorBoundary>
     )
