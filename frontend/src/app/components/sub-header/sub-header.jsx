@@ -7,8 +7,8 @@ export const SubHeader = ({ numberFoundFilms, filmGenre, ...props }) => {
     <div className="sub-header">
       <ContentWrapper>
         <div className="sub-header__content">
-          {numberFoundFilms ? <div className="sub-header__info">{numberFoundFilms} movies found</div> : ''}
-          {filmGenre ? <div className="sub-header__info">Films by {filmGenre} genre</div> : ''}
+          {numberFoundFilms ? <div className="sub-header__info">{numberFoundFilms} movies found</div> : null}
+          {filmGenre ? <div className="sub-header__info">Films by {filmGenre} genre</div> : null}
           {props.children}
         </div>
       </ContentWrapper>

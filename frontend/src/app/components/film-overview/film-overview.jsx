@@ -5,10 +5,10 @@ import { trimReleaseDate } from '../../helpers/trim-release-date';
 export const FilmOverview = ({filmInfo: {title, poster_path, runtime, overview, tagline, release_date, vote_average}}) => {
   return (
     <div className="film-overview">
-      <img src={poster_path} alt="" className="film-overview__poster"/>
+      <img src={poster_path} alt={title} className="film-overview__poster"/>
       <div className="film-overview__description">
-        <div className="film-overview__title">
-          {title}
+        <div className="film-overview__header">
+          <span className="film-overview__title">{title}</span>
           <span className="film-overview__rating">{vote_average}</span>
         </div>
         <div className="film-overview__tagline">{tagline}</div>

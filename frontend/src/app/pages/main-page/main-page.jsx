@@ -1,14 +1,14 @@
 import React from 'react';
-import { Header } from '../components/header/header';
-import { SubHeader } from '../components/sub-header/sub-header';
-import { BodyContent } from '../components/body-content/body-content';
-import { SearchResults } from '../components/search-results/search-results';
-import { SearchField } from '../components/search-form/search-field/search-field';
-import { SearchOptions } from '../components/search-form/search-options/search-options';
-import { SearchForm } from '../components/search-form/search-form';
-import { ErrorBoundary } from '../components/error-bounadary/error-boundary';
-import Axios from 'axios';
-import { SortOptions } from '../components/sort-options/sort-options';
+import { Header } from '../../components/header/header';
+import { SubHeader } from '../../components/sub-header/sub-header';
+import { BodyContent } from '../../components/body-content/body-content';
+import { SearchResults } from '../../components/search-results/search-results';
+import { SearchField } from '../../components/search-form/search-field/search-field';
+import { SearchOptions } from '../../components/search-form/search-options/search-options';
+import { SearchForm } from '../../components/search-form/search-form';
+import { ErrorBoundary } from '../../components/error-bounadary/error-boundary';
+import Axios from 'axios/index';
+import { SortOptions } from '../../components/sort-options/sort-options';
 
 export class MainPage extends React.Component {
   constructor(props) {
@@ -34,7 +34,9 @@ export class MainPage extends React.Component {
   }
 
   inputValueChange(event) {
-    this.state.searchInputValue = event.target.value;
+    this.setState(state => {
+      state.searchInputValue = event.target.value;
+    });
   }
 
   getOptionsForRequest() {
@@ -46,7 +48,7 @@ export class MainPage extends React.Component {
 
   getFilms() {
     const options = this.getOptionsForRequest();
-    Axios
+    return Axios
       .get('http://react-cdp-api.herokuapp.com/movies', {
         params: {
           search: options.searchText.toLowerCase().trim(),
@@ -56,8 +58,9 @@ export class MainPage extends React.Component {
       })
       .then(response => {
         this.setState({ foundFilmList: response.data.data });
+        return response.data.data;
       })
-      .catch((err) => { console.log('Error: ', err) });
+      .catch((err) => `Error: ${err}`);
   }
 
   changeSort(sortBy) {
