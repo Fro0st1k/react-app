@@ -34,6 +34,7 @@ export class MainPage extends React.Component {
   }
 
   inputValueChange(event) {
+    event.persist();
     this.setState(state => {
       state.searchInputValue = event.target.value;
     });

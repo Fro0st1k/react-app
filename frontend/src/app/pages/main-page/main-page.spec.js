@@ -84,7 +84,8 @@ describe('MainPage', () => {
   it('should change state.searchInputValue then call inputValueChange', () => {
     const component = shallow(<MainPage/>);
     const instance = component.instance();
-    instance.inputValueChange({target: {value: 123}});
+    const event = {target: {value: 123}, persist: () => {}};
+    instance.inputValueChange(event);
     expect(instance.state.searchInputValue).toEqual(123);
   });
 

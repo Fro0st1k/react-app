@@ -35,16 +35,22 @@ export class FilmPage extends React.Component {
 
   getFilm(filmId) {
     return Axios.get(`http://react-cdp-api.herokuapp.com/movies/${filmId}`)
-      .then(response => this.setState(state => state.filmInfo = response.data));
+      .then(response => {
+        this.setState(state => state.filmInfo = response.data);
+        return response;
+      });
   }
 
   getFilmsTheSameCategory() {
-    Axios.get(`http://react-cdp-api.herokuapp.com/movies`, {
+    return Axios.get(`http://react-cdp-api.herokuapp.com/movies`, {
       params: {
         searchBy: 'genres',
         search: this.props.location.state ? this.props.location.state.genre : this.state.filmInfo.genres[0]
       }
-    }).then(response => this.setState(state => state.filmSameGenre = response.data.data));
+    }).then(response => {
+      this.setState(state => state.filmSameGenre = response.data.data);
+      return response;
+    });
   }
 
   getDataForPage(filmId) {
