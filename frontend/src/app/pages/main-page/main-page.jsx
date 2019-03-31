@@ -33,10 +33,9 @@ export class MainPage extends React.Component {
     this.getFilms();
   }
 
-  inputValueChange(event) {
-    event.persist();
+  inputValueChange({target: { value }}) {
     this.setState(state => {
-      state.searchInputValue = event.target.value;
+      state.searchInputValue = value;
     });
   }
 
