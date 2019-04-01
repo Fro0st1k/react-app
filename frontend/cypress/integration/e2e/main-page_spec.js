@@ -1,6 +1,6 @@
 describe('Main page', () => {
   it('successfully loads', function() {
-    cy.visit('/')
+    cy.visit('/');
   });
 
   it('should select other option', () => {
@@ -30,6 +30,6 @@ describe('Main page', () => {
 
   it('should change url then click on film preview', () => {
     cy.get('.film-preview').first().click();
-    cy.url().should('include', '/film/')
+    cy.url().should('include', '/film/');
   });
 });

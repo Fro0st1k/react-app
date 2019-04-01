@@ -37,7 +37,6 @@ export class FilmPage extends React.Component {
     return Axios.get(`http://react-cdp-api.herokuapp.com/movies/${filmId}`)
       .then(response => {
         this.setState(state => state.filmInfo = response.data);
-        return response;
       });
   }
 
@@ -49,7 +48,6 @@ export class FilmPage extends React.Component {
       }
     }).then(response => {
       this.setState(state => state.filmSameGenre = response.data.data);
-      return response;
     });
   }
 

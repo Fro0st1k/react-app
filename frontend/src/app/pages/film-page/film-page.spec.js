@@ -1,4 +1,4 @@
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import React from 'react';
 import axios from "axios";
 
@@ -99,21 +99,21 @@ describe('FilmPage', () => {
   it('should get films the same category', (done) => {
     axios.get.mockResolvedValue({data: {data: filmList}});
     const instance = component.instance();
-    instance.getFilmsTheSameCategory().then(response => {
-      expect(response.data.data).toEqual(filmList);
+    instance.getFilmsTheSameCategory().then( () => {
+      expect(instance.state.filmSameGenre).toBe(filmList);
     });
     done();
   });
 
-  it('should fetch films and set state.filmInfo then call getFilms', () => {
+  it('should fetch films and set state.filmInfo then call getFilm', () => {
     axios.get.mockResolvedValue({data: filmInfo});
     const instance = component.instance();
-    instance.getFilm(filmId).then(response => {
-      expect(response.data).toEqual(filmInfo);
+    instance.getFilm(filmId).then(() => {
+      expect(instance.state.filmInfo).toBe(filmInfo);
     });
   });
 
-  it('should call getFilms and getFilmsTheSameCategory then componentDidMount', (done) => {
+  it('should call getFilm and getFilmsTheSameCategory then componentDidMount', (done) => {
     const instance = component.instance();
     instance.getFilmsTheSameCategory = jest.fn();
     instance.getFilm = jest.fn().mockResolvedValue(instance.getFilmsTheSameCategory());

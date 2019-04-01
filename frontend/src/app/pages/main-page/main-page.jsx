@@ -58,7 +58,6 @@ export class MainPage extends React.Component {
       })
       .then(response => {
         this.setState({ foundFilmList: response.data.data });
-        return response.data.data;
       })
       .catch((err) => `Error: ${err}`);
   }

@@ -37,11 +37,15 @@ const filmList = [
     vote_count: 469,
 }];
 
+let component;
 
 describe('MainPage', () => {
 
+  beforeEach(() => {
+    component = shallow(<MainPage/>);
+  });
+
   it('should ignore search if searchInputValue.length < 3', () => {
-    const component = shallow(<MainPage/>);
     const instance = component.instance();
     jest.spyOn(instance, 'getFilms');
     instance.searchFilm();
@@ -50,7 +54,6 @@ describe('MainPage', () => {
 
   it('should search film then searchInputValue.length > 3', () => {
     const event = { preventDefault: () => {}};
-    const component = shallow(<MainPage/>);
     const instance = component.instance();
     component.setState({searchInputValue: 'qwe'});
     instance.getFilms = () => {};
@@ -60,37 +63,30 @@ describe('MainPage', () => {
   });
 
   it('should fetch films and set state.foundFilmList', () => {
-    const component = shallow(<MainPage/>);
     const instance = component.instance();
     axios.get.mockResolvedValue({data: {data: filmList}});
-    instance.getFilms().then(response => {
-      expect(response).toEqual(filmList);
+    instance.getFilms().then(() => {
+      expect(instance.state.foundFilmList).toBe(filmList);
     });
     expect(axios.get).toHaveBeenCalledTimes(1);
   });
 
   it('should handle error if get error then fetch film', () => {
-    const component = shallow(<MainPage/>);
     const instance = component.instance();
     axios.get.mockRejectedValue('error');
     instance.getFilms()
-      .then(error => {
-        expect(error).toEqual(`Error: ${error}`);
-      })
-      .catch(err => err);
+      .catch((error) => expect(error).toEqual(`Error: ${error}`));
     expect(axios.get).toHaveBeenCalledTimes(1);
   });
 
   it('should change state.searchInputValue then call inputValueChange', () => {
-    const component = shallow(<MainPage/>);
     const instance = component.instance();
-    const event = {target: {value: 123}, persist: () => {}};
+    const event = {target: {value: 123}};
     instance.inputValueChange(event);
     expect(instance.state.searchInputValue).toEqual(123);
   });
 
   it('should return options for request then call getOptionsForRequest method', () => {
-    const component = shallow(<MainPage/>);
     const instance = component.instance();
     const options = instance.getOptionsForRequest();
     expect(options.searchBy).toEqual(instance.state.searchBy);
@@ -98,21 +94,18 @@ describe('MainPage', () => {
   });
 
   it('should change sortBy then call changeSort method', () => {
-    const component = shallow(<MainPage/>);
     const instance = component.instance();
     instance.changeSort('rating');
     expect(instance.state.sortedBy).toEqual('rating');
   });
 
   it('should change searchBy then call changeSearchBy method', () => {
-    const component = shallow(<MainPage/>);
     const instance = component.instance();
     instance.changeSearchBy('title');
     expect(instance.state.searchBy).toEqual('title');
   });
 
   it('should render correctly MainPage', () => {
-    const component = shallow(<MainPage/>);
     expect(component).toMatchSnapshot();
   });
 });
