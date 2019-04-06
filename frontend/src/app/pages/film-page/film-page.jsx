@@ -5,26 +5,18 @@ import { SearchResults } from '../../components/search-results/search-results';
 import { FilmOverview } from '../../components/film-overview/film-overview';
 import { Header } from '../../components/header/header';
 import { ErrorBoundary } from '../../components/error-bounadary/error-boundary';
-import Axios from 'axios/index';
-import { SortOptions } from '../../components/sort-options/sort-options';
+import SortOptions from '../../components/sort-options/sort-options';
+import { connect } from 'react-redux';
+import { fetchFilmAction } from '../../actions/current-film.actions';
+import { fetchFilmsAction } from '../../actions/films.actions';
 
-export class FilmPage extends React.Component {
+class FilmPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      filmInfo: {
-        genres: []
-      },
-      filmSameGenre: [],
-      sortedBy: ''
-    };
-
-    this.changeSort = this.changeSort.bind(this);
   }
 
   componentDidMount() {
-    this.getFilm(this.props.match.params.id)
-      .then(() => this.getFilmsTheSameCategory());
+    this.getDataForPage();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -33,46 +25,74 @@ export class FilmPage extends React.Component {
     }
   }
 
-  getFilm(filmId) {
-    return Axios.get(`http://react-cdp-api.herokuapp.com/movies/${filmId}`)
-      .then(response => {
-        this.setState(state => state.filmInfo = response.data);
-      });
-  }
-
-  getFilmsTheSameCategory() {
-    return Axios.get(`http://react-cdp-api.herokuapp.com/movies`, {
-      params: {
-        searchBy: 'genres',
-        search: this.props.location.state ? this.props.location.state.genre : this.state.filmInfo.genres[0]
-      }
-    }).then(response => {
-      this.setState(state => state.filmSameGenre = response.data.data);
+  getFilm() {
+    this.props.fetchFilm({
+      url: `http://react-cdp-api.herokuapp.com/movies/${this.props.match.params.id}`,
+      method: 'GET'
     });
   }
 
-  getDataForPage(filmId) {
-    this.getFilm(filmId);
+  getFilmsTheSameCategory() {
+    this.props.fetchFilmsTheSameCategory({
+      url: 'http://react-cdp-api.herokuapp.com/movies',
+      method: 'GET',
+      params: {
+        searchBy: 'genres',
+        search: this.props.location.state ? this.props.location.state.genre : this.props.filmInfo.genres[0]
+      }
+    });
+  }
+
+  getDataForPage() {
+    this.getFilm();
     this.getFilmsTheSameCategory();
   }
 
-  changeSort(sortBy) {
-    this.setState({sortedBy: sortBy});
-  }
-
   render() {
+    const { sortOptionsList, selectedSortOptionId, filmInfo, filmsSameGenre } = this.props;
     return (
       <ErrorBoundary>
         <Header>
-          <FilmOverview filmInfo={this.state.filmInfo}/>
+          <FilmOverview filmInfo={filmInfo}/>
         </Header>
-        <SubHeader filmGenre={this.state.filmInfo.genres[0]}>
-          <SortOptions changeSort={this.changeSort}/>
+        <SubHeader filmGenre={filmInfo.genres[0]}>
+          <SortOptions/>
         </SubHeader>
         <BodyContent>
-          <SearchResults filmList={this.state.filmSameGenre} sortedBy={this.state.sortedBy}/>
+          <SearchResults filmList={filmsSameGenre} sortedBy={sortOptionsList[selectedSortOptionId]}/>
         </BodyContent>
       </ErrorBoundary>
     )
   }
 }
+
+const mapStateToProps = ({sort, currentFilm, films}) => {
+  const {
+    sortOptionsList,
+    selectedSortOptionId,
+  } = sort;
+
+  const {
+    filmInfo
+  } = currentFilm;
+
+  const {
+    foundFilmsList
+  } = films;
+
+  return {
+    filmInfo,
+    sortOptionsList,
+    selectedSortOptionId,
+    filmsSameGenre: foundFilmsList
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchFilm: (options) => {dispatch(fetchFilmAction(options))},
+    fetchFilmsTheSameCategory: (options) => {dispatch(fetchFilmsAction(options))}
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilmPage);

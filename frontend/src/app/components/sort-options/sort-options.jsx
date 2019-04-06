@@ -1,44 +1,37 @@
 import React from 'react';
 import './sort-options.scss';
-
+import { connect } from 'react-redux';
 import { List } from '../shared/list/list';
+import { changeSortAction } from '../../actions/sort.actions';
 
-export class SortOptions extends React.Component {
-  constructor(props) {
-    super(props);
+const SortOptions = ({ sortOptionsList, selectedSortOptionId, changeSort }) => {
+  const selectOption = (selectOptionId) => {
+    changeSort(selectOptionId);
+  };
 
-    this.state = {
-      sortOptionsList: ['rating', 'date'],
-      selectedOptionId: 0
-    };
+  return (
+    <div className="sort-options">
+      <div className="sort-options__title">sort by</div>
+      <List
+        itemList={sortOptionsList}
+        listClassName="sort-options__list"
+        itemClassName="sort-options__item"
+        selectedItemId={selectedSortOptionId}
+        selectItem={selectOption}
+      />
+    </div>
+  )
+};
 
-    this.selectOption = this.selectOption.bind(this);
+const mapStateToProps = (state) => {
+  const { sortOptionsList, selectedSortOptionId } = state.sort;
+  return { sortOptionsList, selectedSortOptionId };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeSort: (id) => {dispatch(changeSortAction(id))}
   }
+};
 
-  componentDidMount() {
-    this.selectOption(this.state.selectedOptionId);
-  }
-
-  selectOption(selectOptionId) {
-    this.setState(state => {
-      return state.selectedOptionId = selectOptionId;
-    }, () => {
-      this.props.changeSort(this.state.sortOptionsList[selectOptionId]);
-    });
-  }
-
-  render() {
-    return (
-      <div className="sort-options">
-        <div className="sort-options__title">sort by</div>
-        <List itemList={this.state.sortOptionsList}
-              listClassName="sort-options__list"
-              itemClassName="sort-options__item"
-              selectedItemId={this.state.selectedOptionId}
-              selectItem={this.selectOption}
-        />
-      </div>
-    )
-  }
-}
-
+export default connect(mapStateToProps, mapDispatchToProps)(SortOptions);

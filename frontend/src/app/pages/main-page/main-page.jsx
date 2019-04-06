@@ -4,33 +4,29 @@ import { SubHeader } from '../../components/sub-header/sub-header';
 import { BodyContent } from '../../components/body-content/body-content';
 import { SearchResults } from '../../components/search-results/search-results';
 import { SearchField } from '../../components/search-form/search-field/search-field';
-import { SearchOptions } from '../../components/search-form/search-options/search-options';
+import SearchOptions from '../../components/search-form/search-options/search-options';
 import { SearchForm } from '../../components/search-form/search-form';
 import { ErrorBoundary } from '../../components/error-bounadary/error-boundary';
-import Axios from 'axios/index';
-import { SortOptions } from '../../components/sort-options/sort-options';
+import SortOptions from '../../components/sort-options/sort-options';
+import { connect } from 'react-redux';
+import { fetchFilmsAction } from '../../actions/films.actions';
 
-export class MainPage extends React.Component {
+class MainPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       searchInputValue: '',
-      foundFilmList: [],
-      sortedBy: '',
-      searchBy: ''
     };
 
     this.inputValueChange = this.inputValueChange.bind(this);
     this.searchFilm = this.searchFilm.bind(this);
-    this.changeSort = this.changeSort.bind(this);
-    this.changeSearchBy = this.changeSearchBy.bind(this);
   }
 
   searchFilm(event) {
-    if (this.state.searchInputValue.length < 2) return;
     event.preventDefault();
-    this.getFilms();
+    if (this.state.searchInputValue.length < 2) return;
+    this.props.getFilms(this.getOptionsForRequest('http://react-cdp-api.herokuapp.com/movies', 'GET'));
   }
 
   inputValueChange({target: { value }}) {
@@ -39,54 +35,72 @@ export class MainPage extends React.Component {
     });
   }
 
-  getOptionsForRequest() {
-    return {
-      searchBy: this.state.searchBy,
+  getOptionsForRequest(url, method) {
+    const options = {
+      searchBy: this.props.searchOptionsList[this.props.selectedFilterOptionId],
       searchText: this.state.searchInputValue
+    };
+
+    return {
+      url: url,
+      method: method,
+      params: {
+        search: options.searchText.toLowerCase().trim(),
+        searchBy: options.searchBy,
+        limit: 32
+      }
     }
   }
 
-  getFilms() {
-    const options = this.getOptionsForRequest();
-    return Axios
-      .get('http://react-cdp-api.herokuapp.com/movies', {
-        params: {
-          search: options.searchText.toLowerCase().trim(),
-          searchBy: options.searchBy,
-          limit: 32
-        }
-      })
-      .then(response => {
-        this.setState({ foundFilmList: response.data.data });
-      })
-      .catch((err) => `Error: ${err}`);
-  }
-
-  changeSort(sortBy) {
-    this.setState({sortedBy: sortBy});
-  }
-
-  changeSearchBy(searchBy) {
-    this.setState({searchBy: searchBy});
-  }
-
   render() {
+    const { sortOptionsList, selectedSortOptionId, foundFilmsList } = this.props;
     return (
       <ErrorBoundary>
         <Header>
           <SearchForm title='find your movie' sendForm={this.searchFilm}>
             <SearchField onChange={this.inputValueChange}/>
-            <SearchOptions changeSearchBy={this.changeSearchBy}/>
+            <SearchOptions/>
           </SearchForm>
         </Header>
-        <SubHeader numberFoundFilms={this.state.foundFilmList.length}>
-          <SortOptions changeSort={this.changeSort}/>
+        <SubHeader numberFoundFilms={foundFilmsList.length}>
+          <SortOptions/>
         </SubHeader>
         <BodyContent>
-          <SearchResults filmList={this.state.foundFilmList} sortedBy={this.state.sortedBy}/>
+          <SearchResults filmList={foundFilmsList} sortedBy={sortOptionsList[selectedSortOptionId]}/>
         </BodyContent>
       </ErrorBoundary>
     )
   }
 }
 
+const mapStateToProps = ({sort, search, films}) => {
+  const {
+    sortOptionsList,
+    selectedSortOptionId,
+  } = sort;
+
+  const {
+    searchOptionsList,
+    selectedFilterOptionId,
+  } = search;
+
+  const {
+    foundFilmsList,
+  } = films;
+
+  return {
+    sortOptionsList,
+    selectedSortOptionId,
+    searchOptionsList,
+    selectedFilterOptionId,
+    foundFilmsList
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getFilms: (options) => {dispatch(fetchFilmsAction(options))}
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
