@@ -26,30 +26,19 @@ class MainPage extends React.Component {
   searchFilm(event) {
     event.preventDefault();
     if (this.state.searchInputValue.length < 2) return;
-    this.props.getFilms(this.getOptionsForRequest('http://react-cdp-api.herokuapp.com/movies', 'GET'));
+    this.props.getFilms({
+      url:'movies',
+      params: {
+        search: this.state.searchInputValue.toLowerCase().trim(),
+        searchBy: this.props.searchOptionsList[this.props.selectedFilterOptionId]
+      }
+    });
   }
 
   inputValueChange({target: { value }}) {
     this.setState(state => {
       state.searchInputValue = value;
     });
-  }
-
-  getOptionsForRequest(url, method) {
-    const options = {
-      searchBy: this.props.searchOptionsList[this.props.selectedFilterOptionId],
-      searchText: this.state.searchInputValue
-    };
-
-    return {
-      url: url,
-      method: method,
-      params: {
-        search: options.searchText.toLowerCase().trim(),
-        searchBy: options.searchBy,
-        limit: 32
-      }
-    }
   }
 
   render() {
@@ -74,19 +63,9 @@ class MainPage extends React.Component {
 }
 
 const mapStateToProps = ({sort, search, films}) => {
-  const {
-    sortOptionsList,
-    selectedSortOptionId,
-  } = sort;
-
-  const {
-    searchOptionsList,
-    selectedFilterOptionId,
-  } = search;
-
-  const {
-    foundFilmsList,
-  } = films;
+  const { sortOptionsList, selectedSortOptionId } = sort;
+  const { searchOptionsList, selectedFilterOptionId } = search;
+  const { foundFilmsList } = films;
 
   return {
     sortOptionsList,

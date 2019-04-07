@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import { httpService } from '../http/http.service';
 
 export const filmsHasErrored = (hasError) => {
   return {
@@ -21,13 +21,14 @@ export const filmsFetchDataSuccess = (filmList) => {
   };
 };
 
+export const resetFilmList = () => {
+  return {
+    type: 'CLEAR_FILMS'
+  };
+};
+
 export const fetchFilmsAction = (config) => {
   return (dispatch) => {
-    dispatch(filmsIsLoading(true));
-
-    return Axios
-      .request(config)
-      .then(response => dispatch(filmsFetchDataSuccess(response.data.data)))
-      .catch(() => dispatch(filmsHasErrored(true)));
+    httpService.fetchFilms(config, dispatch);
   };
 };

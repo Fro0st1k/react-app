@@ -8,7 +8,7 @@ import { ErrorBoundary } from '../../components/error-bounadary/error-boundary';
 import SortOptions from '../../components/sort-options/sort-options';
 import { connect } from 'react-redux';
 import { fetchFilmAction } from '../../actions/current-film.actions';
-import { fetchFilmsAction } from '../../actions/films.actions';
+import { fetchFilmsAction, resetFilmList } from '../../actions/films.actions';
 
 class FilmPage extends React.Component {
   constructor(props) {
@@ -25,17 +25,17 @@ class FilmPage extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.clearFilmList();
+  }
+
   getFilm() {
-    this.props.fetchFilm({
-      url: `http://react-cdp-api.herokuapp.com/movies/${this.props.match.params.id}`,
-      method: 'GET'
-    });
+    this.props.fetchFilm({url: `movies/${this.props.match.params.id}`});
   }
 
   getFilmsTheSameCategory() {
     this.props.fetchFilmsTheSameCategory({
-      url: 'http://react-cdp-api.herokuapp.com/movies',
-      method: 'GET',
+      url: 'movies',
       params: {
         searchBy: 'genres',
         search: this.props.location.state ? this.props.location.state.genre : this.props.filmInfo.genres[0]
@@ -67,18 +67,9 @@ class FilmPage extends React.Component {
 }
 
 const mapStateToProps = ({sort, currentFilm, films}) => {
-  const {
-    sortOptionsList,
-    selectedSortOptionId,
-  } = sort;
-
-  const {
-    filmInfo
-  } = currentFilm;
-
-  const {
-    foundFilmsList
-  } = films;
+  const { sortOptionsList, selectedSortOptionId } = sort;
+  const { filmInfo } = currentFilm;
+  const { foundFilmsList } = films;
 
   return {
     filmInfo,
@@ -90,8 +81,9 @@ const mapStateToProps = ({sort, currentFilm, films}) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchFilm: (options) => {dispatch(fetchFilmAction(options))},
-    fetchFilmsTheSameCategory: (options) => {dispatch(fetchFilmsAction(options))}
+    fetchFilm: (options) => { dispatch(fetchFilmAction(options)) },
+    fetchFilmsTheSameCategory: (options) => { dispatch(fetchFilmsAction(options)) },
+    clearFilmList: () => { dispatch(resetFilmList()) }
   };
 };
 

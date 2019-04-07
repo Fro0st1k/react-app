@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import { httpService } from '../http/http.service';
 
 export const filmHasErrored = (hasError) => {
   return {
@@ -23,11 +23,6 @@ export const filmFetchDataSuccess = (filmInfo) => {
 
 export const fetchFilmAction = (config) => {
   return (dispatch) => {
-    dispatch(filmIsLoading(true));
-
-    return Axios
-      .request(config)
-      .then(response => dispatch(filmFetchDataSuccess(response.data)))
-      .catch(() => dispatch(filmHasErrored(true)));
+    httpService.fetchFilm(config, dispatch);
   };
 };

@@ -22,6 +22,11 @@ export const filmsReducer = (state = filmsState, action) => {
         isLoading: false,
         foundFilmsList: action.filmList
       };
+    case 'CLEAR_FILMS':
+      return {
+        ...state,
+        foundFilmsList: []
+      };
     default:
       return state;
   }
