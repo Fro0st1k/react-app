@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { fetchFilmAction } from '../../actions/current-film.actions';
 import { fetchFilmsAction, resetFilmList } from '../../actions/films.actions';
 
-class FilmPage extends React.Component {
+export class FilmPage extends React.Component {
   constructor(props) {
     super(props);
   }

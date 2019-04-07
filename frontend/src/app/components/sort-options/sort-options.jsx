@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { List } from '../shared/list/list';
 import { changeSortAction } from '../../actions/sort.actions';
 
-const SortOptions = ({ sortOptionsList, selectedSortOptionId, changeSort }) => {
+export const SortOptions = ({ sortOptionsList, selectedSortOptionId, changeSort }) => {
   const selectOption = (selectOptionId) => {
     changeSort(selectOptionId);
   };

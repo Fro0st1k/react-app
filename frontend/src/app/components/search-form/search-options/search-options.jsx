@@ -3,7 +3,7 @@ import { List } from '../../shared/list/list';
 import { connect } from 'react-redux';
 import { changeSearchFilterAction } from '../../../actions/filter.actions';
 
-const SearchOptions = ({searchOptionsList, selectedFilterOptionId, changeFilter}) => {
+export const SearchOptions = ({searchOptionsList, selectedFilterOptionId, changeFilter}) => {
   const selectFilter = (selectOptionId) => {
     changeFilter(selectOptionId);
   };

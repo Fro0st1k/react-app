@@ -5,28 +5,18 @@ import React from 'react';
 import { SearchOptions } from './search-options';
 
 const props = {
-  changeSearchBy: jest.fn()
+  changeFilter: jest.fn(),
+  searchOptionsList: ['1', '2'],
+  selectedFilterOptionId: 0
 };
 
 const component = mount(<SearchOptions {...props}/>);
 
 describe('SearchOptionsComponent', () => {
 
-  it('should select default options', () => {
-    expect(component.state('selectedOptionId')).toBe(0);
-  });
-
-  it('should change state.selectedOptionId then call selectOption method', () => {
-    const selectedOptionId = 1;
-    component.instance().selectOption(selectedOptionId);
-    expect(component.state('selectedOptionId')).toBe(selectedOptionId);
-  });
-
-  it('should call props.changeSearchBy after call selectOption method', () => {
-    const instance = component.instance();
-    const selectedOptionId = 1;
-    instance.selectOption(selectedOptionId);
-    expect(props.changeSearchBy).toHaveBeenCalledWith(instance.state.searchOptionsList[selectedOptionId]);
+  it('should call props.changeFilter after call selectFilter method', () => {
+    component.find('li').first().simulate('click');
+    expect(component.props().changeFilter).toHaveBeenCalled();
   });
 
   it('should render correctly SearchOptionsComponent', () => {

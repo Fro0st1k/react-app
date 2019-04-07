@@ -11,7 +11,7 @@ import SortOptions from '../../components/sort-options/sort-options';
 import { connect } from 'react-redux';
 import { fetchFilmsAction } from '../../actions/films.actions';
 
-class MainPage extends React.Component {
+export class MainPage extends React.Component {
   constructor(props) {
     super(props);
 

@@ -1,57 +1,11 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import axios from "axios";
-
 import { FilmPage } from './film-page';
+import configureStore from 'redux-mock-store';
 
-
-jest.mock("axios");
-
-const filmList = [
-  {
-    budget: 5000000,
-    genres: ["Horror", "Thriller"],
-    id: 10072,
-    overview: "",
-    poster_path: "",
-    release_date: "1987-02-27",
-    revenue: 44793222,
-    runtime: 96,
-    tagline: "",
-    title: "",
-    vote_average: 6.5,
-    vote_count: 469,
-  },
-  {
-    budget: 2000400,
-    genres: ["Comedy"],
-    id: 1004,
-    overview: "",
-    poster_path: "",
-    release_date: "1997-02-27",
-    revenue: 443222,
-    runtime: 123,
-    tagline: "",
-    title: "",
-    vote_average: 7,
-    vote_count: 469,
-  }
-];
-
-const filmInfo = {
-  budget: 2000400,
-  genres: ["Comedy"],
-  id: 10,
-  overview: "",
-  poster_path: "",
-  release_date: "1997-02-27",
-  revenue: 443222,
-  runtime: 123,
-  tagline: "",
-  title: "",
-  vote_average: 7,
-  vote_count: 469,
-};
+const mockStore = configureStore();
+const initialState = {};
+let store;
 
 const props = {
   match: {
@@ -61,15 +15,25 @@ const props = {
   },
   location: {
     state: null
-  }
+  },
+  filmInfo: {
+    genres: []
+  },
+  sortOptionsList: ['1', '2'],
+  selectedSortOptionId: 0,
+  filmsSameGenre: [],
+  fetchFilmsTheSameCategory: jest.fn(),
+  fetchFilm: jest.fn(),
+  clearFilmList: jest.fn()
 };
-const filmId = 10;
+
 let component;
 
 describe('FilmPage', () => {
 
   beforeEach(() => {
-    component = shallow(<FilmPage {...props}/>, { disableLifecycleMethods: true });
+    store = mockStore(initialState);
+    component = shallow(<FilmPage {...props} store={store}/>, { disableLifecycleMethods: true });
   });
 
   it('should componentDidUpdate call getDataForPage then props != prevProps ', (done) => {
@@ -96,27 +60,22 @@ describe('FilmPage', () => {
     done();
   });
 
-  it('should get films the same category', (done) => {
-    axios.get.mockResolvedValue({data: {data: filmList}});
+  it('should fire fetchFilmsTheSameCategory then call getFilmsTheSameCategory', () => {
     const instance = component.instance();
-    instance.getFilmsTheSameCategory().then( () => {
-      expect(instance.state.filmSameGenre).toBe(filmList);
-    });
-    done();
+    instance.getFilmsTheSameCategory();
+    expect(instance.props.fetchFilmsTheSameCategory).toHaveBeenCalled();
   });
 
-  it('should fetch films and set state.filmInfo then call getFilm', () => {
-    axios.get.mockResolvedValue({data: filmInfo});
+  it('should fire fetchFilm then call getFilm', () => {
     const instance = component.instance();
-    instance.getFilm(filmId).then(() => {
-      expect(instance.state.filmInfo).toBe(filmInfo);
-    });
+    instance.getFilm();
+    expect(instance.props.fetchFilm).toHaveBeenCalled();
   });
 
   it('should call getFilm and getFilmsTheSameCategory then componentDidMount', (done) => {
     const instance = component.instance();
     instance.getFilmsTheSameCategory = jest.fn();
-    instance.getFilm = jest.fn().mockResolvedValue(instance.getFilmsTheSameCategory());
+    instance.getFilm = jest.fn();
     instance.componentDidMount();
     expect(instance.getFilm).toHaveBeenCalled();
     expect(instance.getFilmsTheSameCategory).toHaveBeenCalled();
@@ -127,15 +86,9 @@ describe('FilmPage', () => {
     const instance = component.instance();
     instance.getFilm = jest.fn();
     instance.getFilmsTheSameCategory = jest.fn();
-    instance.getDataForPage(filmId);
-    expect(instance.getFilm).toHaveBeenCalledWith(filmId);
+    instance.getDataForPage();
+    expect(instance.getFilm).toHaveBeenCalled();
     expect(instance.getFilmsTheSameCategory).toHaveBeenCalled();
-  });
-
-  it('should change sort then call changeSort method', () => {
-    const instance = component.instance();
-    instance.changeSort('date');
-    expect(instance.state.sortedBy).toEqual('date');
   });
 
   it('should render correctly FilmPage', () => {

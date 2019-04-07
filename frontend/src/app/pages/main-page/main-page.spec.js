@@ -1,82 +1,46 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import axios from "axios";
-
+import configureStore from 'redux-mock-store'
 import { MainPage } from './main-page';
 
-
-jest.mock("axios");
-
-const filmList = [
-  {
-    budget: 5000000,
-    genres: ["Horror", "Thriller"],
-    id: 10072,
-    overview: "",
-    poster_path: "",
-    release_date: "1987-02-27",
-    revenue: 44793222,
-    runtime: 96,
-    tagline: "",
-    title: "",
-    vote_average: 6.5,
-    vote_count: 469,
-  },
-  {
-    budget: 2000400,
-    genres: ["Comedy"],
-    id: 1004,
-    overview: "",
-    poster_path: "",
-    release_date: "1997-02-27",
-    revenue: 443222,
-    runtime: 123,
-    tagline: "",
-    title: "",
-    vote_average: 7,
-    vote_count: 469,
-}];
-
+const mockStore = configureStore();
+const initialState = {};
+let store;
 let component;
+
+const props = {
+  getFilms: jest.fn(),
+  sortOptionsList: [],
+  selectedSortOptionId: 0,
+  searchOptionsList: [],
+  selectedFilterOptionId: 0,
+  foundFilmsList: []
+};
+
+const event = {
+  preventDefault: jest.fn()
+};
 
 describe('MainPage', () => {
 
   beforeEach(() => {
-    component = shallow(<MainPage/>);
+    store = mockStore(initialState);
+    component = shallow(<MainPage {...props} store={store}/>);
   });
 
   it('should ignore search if searchInputValue.length < 3', () => {
     const instance = component.instance();
-    jest.spyOn(instance, 'getFilms');
-    instance.searchFilm();
-    expect(instance.getFilms).not.toHaveBeenCalled();
+    instance.searchFilm(event);
+    expect(event.preventDefault).toHaveBeenCalled();
+    expect(instance.props.getFilms).not.toHaveBeenCalled();
   });
 
   it('should search film then searchInputValue.length > 3', () => {
-    const event = { preventDefault: () => {}};
     const instance = component.instance();
     component.setState({searchInputValue: 'qwe'});
-    instance.getFilms = () => {};
-    jest.spyOn(instance, 'getFilms');
     instance.searchFilm(event);
-    expect(instance.getFilms).toHaveBeenCalled();
-  });
-
-  it('should fetch films and set state.foundFilmList', () => {
-    const instance = component.instance();
-    axios.get.mockResolvedValue({data: {data: filmList}});
-    instance.getFilms().then(() => {
-      expect(instance.state.foundFilmList).toBe(filmList);
-    });
-    expect(axios.get).toHaveBeenCalledTimes(1);
-  });
-
-  it('should handle error if get error then fetch film', () => {
-    const instance = component.instance();
-    axios.get.mockRejectedValue('error');
-    instance.getFilms()
-      .catch((error) => expect(error).toEqual(`Error: ${error}`));
-    expect(axios.get).toHaveBeenCalledTimes(1);
+    expect(event.preventDefault).toHaveBeenCalled();
+    expect(instance.props.getFilms).toHaveBeenCalled();
   });
 
   it('should change state.searchInputValue then call inputValueChange', () => {
@@ -84,25 +48,6 @@ describe('MainPage', () => {
     const event = {target: {value: 123}};
     instance.inputValueChange(event);
     expect(instance.state.searchInputValue).toEqual(123);
-  });
-
-  it('should return options for request then call getOptionsForRequest method', () => {
-    const instance = component.instance();
-    const options = instance.getOptionsForRequest();
-    expect(options.searchBy).toEqual(instance.state.searchBy);
-    expect(options.searchText).toEqual(instance.state.searchInputValue);
-  });
-
-  it('should change sortBy then call changeSort method', () => {
-    const instance = component.instance();
-    instance.changeSort('rating');
-    expect(instance.state.sortedBy).toEqual('rating');
-  });
-
-  it('should change searchBy then call changeSearchBy method', () => {
-    const instance = component.instance();
-    instance.changeSearchBy('title');
-    expect(instance.state.searchBy).toEqual('title');
   });
 
   it('should render correctly MainPage', () => {
