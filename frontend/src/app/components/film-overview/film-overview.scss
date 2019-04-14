@@ -11,11 +11,13 @@
     height: 340px;
     background-color: rgb(198, 194, 195);
     margin: 20px;
+    border-radius: 2px;
   }
 
   &__description {
     margin: 20px;
     padding: 30px 0;
+    width: 100%;
   }
 
   &__header {
@@ -26,6 +28,11 @@
     align-items: center;
   }
 
+  &__title {
+    height: 28px;
+    min-width: 90px;
+  }
+
   &__rating {
     display: inline-block;
     color: white;
@@ -34,27 +41,90 @@
     padding: 1px 5px;
     border: 1px solid $main-contrast-color;
     border-radius: 2px;
-    margin: 0 0 2px 20px;
+    margin-left: 20px;
+    height: 20px;
+    min-width: 26px;
   }
 
   &__stats {
     display: flex;
+    margin-top: 20px;
   }
 
   &__tagline {
+    display: inline-block;
     font-size: 18px;
     font-weight: 500;
-    padding: 5px 0;
+    margin-top: 5px;
+    min-width: 300px;
+    height: 20px;
   }
 
   &__year {
     margin-right: 30px;
+    min-width: 36px;
   }
 
-  &__duration {}
+  &__duration {
+    min-width: 50px;
+  }
+
+  &__year,
+  &__duration {
+    height: 16px;
+  }
 
   &__story {
-    padding: 5px 0;
+    margin: 15px 0 5px;
     font-size: 16px;
+  }
+
+  &__story-string {
+    height: 14px;
+    width: 100%;
+    margin-bottom: 5px;
+
+    &--first {
+      width: 79%;
+    }
+
+    &--secont {
+      width: 90%;
+    }
+
+    &--third {
+      width: 85%;
+    }
+
+    &--last {
+      width: 52%;
+    }
+  }
+}
+
+.loading-bg {
+  animation-duration: 4s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: bg-animation;
+  animation-timing-function: ease-in-out;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  position: relative;
+  border: none;
+  padding: 0;
+  border-radius: 2px;
+}
+
+@keyframes bg-animation {
+  0%{
+    background-position: -100% 0
+  }
+  50% {
+    background-position: 100% 0
+  }
+  100%{
+    background-position: 230% 0
   }
 }

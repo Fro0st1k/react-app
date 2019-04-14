@@ -1,4 +1,4 @@
-import { httpService } from '../http/http.service';
+import { httpService } from '../../http/http.service';
 
 export const filmHasErrored = (hasError) => {
   return {

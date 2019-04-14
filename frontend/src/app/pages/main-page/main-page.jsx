@@ -4,12 +4,10 @@ import { SubHeader } from '../../components/sub-header/sub-header';
 import { BodyContent } from '../../components/body-content/body-content';
 import { SearchResults } from '../../components/search-results/search-results';
 import { SearchField } from '../../components/search-form/search-field/search-field';
-import SearchOptions from '../../components/search-form/search-options/search-options';
 import { SearchForm } from '../../components/search-form/search-form';
 import { ErrorBoundary } from '../../components/error-bounadary/error-boundary';
-import SortOptions from '../../components/sort-options/sort-options';
-import { connect } from 'react-redux';
-import { fetchFilmsAction } from '../../actions/films.actions';
+import SortOptionsContainer from '../../store/containers/sort-options-container';
+import SearchOptionsContainer from '../../store/containers/search-options-container';
 
 export class MainPage extends React.Component {
   constructor(props) {
@@ -48,11 +46,11 @@ export class MainPage extends React.Component {
         <Header>
           <SearchForm title='find your movie' sendForm={this.searchFilm}>
             <SearchField onChange={this.inputValueChange}/>
-            <SearchOptions/>
+            <SearchOptionsContainer/>
           </SearchForm>
         </Header>
         <SubHeader numberFoundFilms={foundFilmsList.length}>
-          <SortOptions/>
+          <SortOptionsContainer/>
         </SubHeader>
         <BodyContent>
           <SearchResults filmList={foundFilmsList} sortedBy={sortOptionsList[selectedSortOptionId]}/>
@@ -61,25 +59,3 @@ export class MainPage extends React.Component {
     )
   }
 }
-
-const mapStateToProps = ({sort, search, films}) => {
-  const { sortOptionsList, selectedSortOptionId } = sort;
-  const { searchOptionsList, selectedFilterOptionId } = search;
-  const { foundFilmsList } = films;
-
-  return {
-    sortOptionsList,
-    selectedSortOptionId,
-    searchOptionsList,
-    selectedFilterOptionId,
-    foundFilmsList
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getFilms: (options) => {dispatch(fetchFilmsAction(options))}
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

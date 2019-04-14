@@ -1,8 +1,6 @@
 import React from 'react';
 import './sort-options.scss';
-import { connect } from 'react-redux';
 import { List } from '../shared/list/list';
-import { changeSortAction } from '../../actions/sort.actions';
 
 export const SortOptions = ({ sortOptionsList, selectedSortOptionId, changeSort }) => {
   const selectOption = (selectOptionId) => {
@@ -22,16 +20,3 @@ export const SortOptions = ({ sortOptionsList, selectedSortOptionId, changeSort 
     </div>
   )
 };
-
-const mapStateToProps = (state) => {
-  const { sortOptionsList, selectedSortOptionId } = state.sort;
-  return { sortOptionsList, selectedSortOptionId };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    changeSort: (id) => {dispatch(changeSortAction(id))}
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SortOptions);

@@ -1,6 +1,6 @@
 import Axios from 'axios';
-import { filmsFetchDataSuccess, filmsHasErrored, filmsIsLoading } from '../actions/films.actions';
-import { filmFetchDataSuccess, filmHasErrored, filmIsLoading } from '../actions/current-film.actions';
+import { filmsFetchDataSuccess, filmsHasErrored, filmsIsLoading } from '../store/actions/films.actions';
+import { filmFetchDataSuccess, filmHasErrored, filmIsLoading } from '../store/actions/current-film.actions';
 
 class HttpService {
 

@@ -1,7 +1,5 @@
 import React from 'react';
 import { List } from '../../shared/list/list';
-import { connect } from 'react-redux';
-import { changeSearchFilterAction } from '../../../actions/filter.actions';
 
 export const SearchOptions = ({searchOptionsList, selectedFilterOptionId, changeFilter}) => {
   const selectFilter = (selectOptionId) => {
@@ -22,15 +20,3 @@ export const SearchOptions = ({searchOptionsList, selectedFilterOptionId, change
   )
 };
 
-const mapStateToProps = (state) => {
-  const { searchOptionsList, selectedFilterOptionId } = state.search;
-  return { searchOptionsList, selectedFilterOptionId };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    changeFilter: (id) => {dispatch(changeSearchFilterAction(id))}
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchOptions);

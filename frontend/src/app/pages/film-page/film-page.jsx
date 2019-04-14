@@ -5,10 +5,7 @@ import { SearchResults } from '../../components/search-results/search-results';
 import { FilmOverview } from '../../components/film-overview/film-overview';
 import { Header } from '../../components/header/header';
 import { ErrorBoundary } from '../../components/error-bounadary/error-boundary';
-import SortOptions from '../../components/sort-options/sort-options';
-import { connect } from 'react-redux';
-import { fetchFilmAction } from '../../actions/current-film.actions';
-import { fetchFilmsAction, resetFilmList } from '../../actions/films.actions';
+import SortOptionsContainer from '../../store/containers/sort-options-container';
 
 export class FilmPage extends React.Component {
   constructor(props) {
@@ -49,14 +46,14 @@ export class FilmPage extends React.Component {
   }
 
   render() {
-    const { sortOptionsList, selectedSortOptionId, filmInfo, filmsSameGenre } = this.props;
+    const { sortOptionsList, selectedSortOptionId, filmInfo, filmsSameGenre, filmInfoIsLoading } = this.props;
     return (
       <ErrorBoundary>
         <Header>
-          <FilmOverview filmInfo={filmInfo}/>
+          <FilmOverview filmInfo={filmInfo} isLoading={filmInfoIsLoading}/>
         </Header>
         <SubHeader filmGenre={filmInfo.genres[0]}>
-          <SortOptions/>
+          <SortOptionsContainer/>
         </SubHeader>
         <BodyContent>
           <SearchResults filmList={filmsSameGenre} sortedBy={sortOptionsList[selectedSortOptionId]}/>
@@ -65,26 +62,3 @@ export class FilmPage extends React.Component {
     )
   }
 }
-
-const mapStateToProps = ({sort, currentFilm, films}) => {
-  const { sortOptionsList, selectedSortOptionId } = sort;
-  const { filmInfo } = currentFilm;
-  const { foundFilmsList } = films;
-
-  return {
-    filmInfo,
-    sortOptionsList,
-    selectedSortOptionId,
-    filmsSameGenre: foundFilmsList
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchFilm: (options) => { dispatch(fetchFilmAction(options)) },
-    fetchFilmsTheSameCategory: (options) => { dispatch(fetchFilmsAction(options)) },
-    clearFilmList: () => { dispatch(resetFilmList()) }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilmPage);
