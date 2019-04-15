@@ -45,4 +45,10 @@ describe("filmsReducer", () => {
     fn(dispatch);
     expect(httpService.fetchFilms).toHaveBeenCalledWith(config, dispatch);
   });
+
+  it('should rest foundFilmsList', () => {
+    const result = [];
+    const newState = filmsReducer(initialState, filmsActions.resetFilmList());
+    expect(newState.foundFilmsList).toEqual(result);
+  });
 });
