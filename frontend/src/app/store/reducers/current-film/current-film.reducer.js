@@ -1,4 +1,4 @@
-const currentFilmState = {
+export const initialFilmState = {
   filmInfo: {
     genres: []
   },
@@ -6,7 +6,7 @@ const currentFilmState = {
   isLoading: false
 };
 
-export const currentFilmReducer = (state = currentFilmState, action) => {
+export const currentFilmReducer = (state = initialFilmState, action = {}) => {
   switch (action.type) {
     case 'FILM_NOT_LOADED':
       return {

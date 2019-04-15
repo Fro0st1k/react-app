@@ -1,6 +1,6 @@
 import { httpService } from '../../http/http.service';
 
-export const filmsHasErrored = (hasError) => {
+export const filmsHasError = (hasError) => {
   return {
     type: 'FILMS_NOT_LOADED',
     hasError: hasError

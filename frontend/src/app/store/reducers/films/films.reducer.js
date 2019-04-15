@@ -1,10 +1,10 @@
-const filmsState = {
+export const initialFilmsState = {
   foundFilmsList: [],
   hasError: false,
   isLoading: false
 };
 
-export const filmsReducer = (state = filmsState, action) => {
+export const filmsReducer = (state = initialFilmsState, action = {}) => {
   switch (action.type) {
     case 'FILMS_NOT_LOADED':
       return {

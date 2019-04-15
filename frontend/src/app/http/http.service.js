@@ -1,6 +1,6 @@
 import Axios from 'axios';
-import { filmsFetchDataSuccess, filmsHasErrored, filmsIsLoading } from '../store/actions/films.actions';
-import { filmFetchDataSuccess, filmHasErrored, filmIsLoading } from '../store/actions/current-film.actions';
+import { filmsFetchDataSuccess, filmsHasError, filmsIsLoading } from '../store/actions/films.actions';
+import { filmFetchDataSuccess, filmHasError, filmIsLoading } from '../store/actions/current-film.actions';
 
 class HttpService {
 
@@ -36,7 +36,7 @@ class HttpService {
 
     return this.makeRequest(optionsData)
       .then(response => dispatch(filmsFetchDataSuccess(response.data.data)))
-      .catch(() => dispatch(filmsHasErrored(true)));
+      .catch(() => dispatch(filmsHasError(true)));
   }
 
   fetchFilm(optionsData, dispatch) {
@@ -44,7 +44,7 @@ class HttpService {
 
     return this.makeRequest(optionsData)
       .then(response => dispatch(filmFetchDataSuccess(response.data)))
-      .catch(() => dispatch(filmHasErrored(true)));
+      .catch(() => dispatch(filmHasError(true)));
   }
 }
 
