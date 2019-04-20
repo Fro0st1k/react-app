@@ -18,7 +18,8 @@ export const App = () => {
           <Router>
             <Switch>
               <Route exact path="/" component={MainPageContainer}/>
-              <Route exact path="/film/:id" render={(props) => <FilmPageContainer {...props} />}/>
+              <Route path="/search" render={(props) => <MainPageContainer {...props} />} />
+              <Route path="/film/:id" render={(props) => <FilmPageContainer {...props} />} />
               <Route component={NotFoundPage}/>
             </Switch>
           </Router>

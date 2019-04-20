@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeSort: (id) => {dispatch(changeSortAction(id))}
+    changeSort: (id) => dispatch(changeSortAction(id))
   }
 };
 

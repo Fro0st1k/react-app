@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeFilter: (id) => {dispatch(changeSearchFilterAction(id))}
+    changeFilter: (id) => dispatch(changeSearchFilterAction(id))
   }
 };
 
