@@ -23,6 +23,6 @@ export const filmFetchDataSuccess = (filmInfo) => {
 
 export const fetchFilmAction = (config) => {
   return (dispatch) => {
-    httpService.fetchFilm(config, dispatch);
+    return httpService.fetchFilm(config, dispatch);
   };
 };

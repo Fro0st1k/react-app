@@ -8,6 +8,7 @@ import { SearchForm } from '../../components/search-form/search-form';
 import { ErrorBoundary } from '../../components/error-bounadary/error-boundary';
 import SortOptionsContainer from '../../store/containers/sort-options-container';
 import SearchOptionsContainer from '../../store/containers/search-options-container';
+import Router from 'next/router';
 
 export class MainPage extends React.PureComponent {
   constructor(props) {
@@ -49,7 +50,10 @@ export class MainPage extends React.PureComponent {
       sortOrder: this.props.sortOptionsList[this.props.selectedSortOptionId]
     };
     this.fetchFilmData(params);
-    this.props.history.push(`/search/result?sortOrder=${params.sortOrder}&search=${params.search}&searchBy=${params.searchBy}`);
+    Router.push({
+      pathname: `/search/result`,
+      query: { sortOrder: params.sortOrder, search: params.search, searchBy: params.searchBy}
+    });
   }
 
   fetchFilmData(params) {

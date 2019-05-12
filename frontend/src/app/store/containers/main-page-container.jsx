@@ -20,7 +20,7 @@ const mapStateToProps = ({sort, search, films}, routerProps) => {
     searchOptionsList,
     selectedFilterOptionId,
     foundFilmsList,
-    searchQuery: routerPropsToQuery(routerProps)
+    searchQuery: {}
   };
 };
 

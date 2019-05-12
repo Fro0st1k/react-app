@@ -1,11 +1,11 @@
 import React from 'react';
 import './film-preview.scss';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { trimReleaseDate } from '../../helpers/trim-release-date';
 
 export const FilmPreview = ({filmInfo: {title, poster_path, release_date, genres, id}}) => {
   return (
-    <Link to={{ pathname: `/film/${id}`, state: {genre: genres[0]}}}>
+    <Link href={{ pathname: `/film/${id}` }}>
       <div className="film-preview">
         <img className="film-preview__img" src={poster_path} alt={title}/>
         <div className="film-preview__description">
