@@ -12,27 +12,8 @@ export class FilmPage extends React.Component {
     super(props);
   }
 
-  static async getInitialProps(...props) {
-    console.log('from filmPage');
-    console.log(props)
-  }
-
   componentDidMount() {
-    this.getDataForPage();
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    // if (this.props.router.query.filmId !== prevProps.router.query.filmId) {
-    //   this.getDataForPage(this.props.router.query.filmId);
-    // }
-  }
-
-  componentWillUnmount() {
-    this.props.clearFilmList();
-  }
-
-  getFilm() {
-    return this.props.fetchFilm({url: `movies/${this.props.filmId}`});
+    this.getFilmsTheSameCategory();
   }
 
   getFilmsTheSameCategory() {
@@ -43,11 +24,6 @@ export class FilmPage extends React.Component {
         search: this.props.filmInfo.genres[0]
       }
     });
-  }
-
-  getDataForPage() {
-    this.getFilm()
-      .then(() => this.getFilmsTheSameCategory());
   }
 
   render() {

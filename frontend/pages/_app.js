@@ -8,14 +8,15 @@ import { Footer } from '../src/app/components/footer/footer';
 import withRedux from 'next-redux-wrapper';
 
 class FilmApp extends App {
+  constructor (props) {
+    super(props);
+  }
+
   static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
-
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    }
-
-    return { pageProps };
+    return { pageProps:  Component.getInitialProps
+      ? await Component.getInitialProps(ctx)
+      : {}
+    };
   }
 
   render() {
