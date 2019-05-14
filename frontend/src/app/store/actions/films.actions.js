@@ -28,7 +28,7 @@ export const resetFilmList = () => {
 };
 
 export const fetchFilmsAction = (config) => {
-  return (dispatch) => {
-    httpService.fetchFilms(config, dispatch);
+  return async (dispatch) => {
+    return await httpService.fetchFilms(config, dispatch);
   };
 };

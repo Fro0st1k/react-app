@@ -10,8 +10,7 @@ const FilmPageContainer = (props) => {
 
 FilmPageContainer.getInitialProps = async function({ query, reduxStore }) {
   const { filmId } = query;
-  // await reduxStore.dispatch(fetchFilmAction({url: `movies/${filmId}`}));
-
+  await reduxStore.dispatch(fetchFilmAction({url: `movies/${filmId}`}));
   return {};
 };
 

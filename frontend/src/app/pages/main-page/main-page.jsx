@@ -37,7 +37,6 @@ export class MainPage extends React.PureComponent {
         selectedSortOptionId: sortOptionsList.indexOf(sortOrder),
         selectedFilterOptionId: searchOptionsList.indexOf(searchBy)
       });
-      this.fetchFilmData(this.searchQuery);
     }
   }
 
@@ -49,20 +48,10 @@ export class MainPage extends React.PureComponent {
       searchBy: this.props.searchOptionsList[this.props.selectedFilterOptionId],
       sortOrder: this.props.sortOptionsList[this.props.selectedSortOptionId]
     };
-    this.fetchFilmData(params);
+
     Router.push({
       pathname: `/search/result`,
       query: { sortOrder: params.sortOrder, search: params.search, searchBy: params.searchBy}
-    });
-  }
-
-  fetchFilmData(params) {
-    this.props.getFilms({
-      url:'movies',
-      params: {
-        search: params.search,
-        searchBy: params.searchBy
-      }
     });
   }
 

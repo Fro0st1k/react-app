@@ -23,7 +23,8 @@ app
 
     server.get('/search/result', (req, res) => {
       const actualPage = '/search';
-      app.render(req, res, actualPage)
+      const queryParams = req.query;
+      app.render(req, res, actualPage, queryParams);
     });
 
     server.get('*', (req, res) => {
