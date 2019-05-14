@@ -27,8 +27,7 @@ app
     });
 
     server.get('*', (req, res) => {
-      const notFound = '/404';
-      app.render(req, res, notFound);
+      return handle(req, res);
     });
 
     server.listen(3000, err => {

@@ -22,7 +22,7 @@ export const filmFetchDataSuccess = (filmInfo) => {
 };
 
 export const fetchFilmAction = (config) => {
-  return (dispatch) => {
-    return httpService.fetchFilm(config, dispatch);
+  return async (dispatch) => {
+    return await httpService.fetchFilm(config, dispatch);
   };
 };
