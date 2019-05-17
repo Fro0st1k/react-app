@@ -3,15 +3,16 @@ import './sub-header.scss';
 import { ContentWrapper } from '../shared/content-wrapper/content-wrapper';
 
 export const SubHeader = ({ numberFoundFilms, filmGenre, ...props }) => {
+  const { children } = props;
   return (
     <div className="sub-header">
       <ContentWrapper>
         <div className="sub-header__content">
-          {numberFoundFilms ? <div className="sub-header__info">{numberFoundFilms} movies found</div> : null}
-          {filmGenre ? <div className="sub-header__info">Films by {filmGenre} genre</div> : null}
-          {props.children}
+          {numberFoundFilms ? <div className="sub-header__info">{`${numberFoundFilms} movies found`}</div> : null}
+          {filmGenre ? <div className="sub-header__info">{`Films by ${filmGenre} genre`}</div> : null}
+          {children}
         </div>
       </ContentWrapper>
     </div>
-  )
+  );
 };

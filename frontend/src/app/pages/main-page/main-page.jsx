@@ -14,7 +14,7 @@ export class MainPage extends React.PureComponent {
     super(props);
 
     this.state = {
-      searchInputValue: '',
+      searchInputValue: ''
     };
 
     this.inputValueChange = this.inputValueChange.bind(this);
@@ -54,7 +54,7 @@ export class MainPage extends React.PureComponent {
 
   fetchFilmData(params) {
     this.props.getFilms({
-      url:'movies',
+      url: 'movies',
       params: {
         search: params.search,
         searchBy: params.searchBy
@@ -62,10 +62,8 @@ export class MainPage extends React.PureComponent {
     });
   }
 
-  inputValueChange({target: { value }}) {
-    this.setState(state => {
-      state.searchInputValue = value;
-    });
+  inputValueChange({ target: { value } }) {
+    this.setState({ searchInputValue: value });
   }
 
   render() {
@@ -73,18 +71,21 @@ export class MainPage extends React.PureComponent {
     return (
       <ErrorBoundary>
         <Header>
-          <SearchForm title='find your movie' sendForm={this.searchFilm}>
-            <SearchField onChange={this.inputValueChange}/>
-            <SearchOptionsContainer/>
+          <SearchForm title="find your movie" sendForm={this.searchFilm}>
+            <SearchField onChange={this.inputValueChange} />
+            <SearchOptionsContainer />
           </SearchForm>
         </Header>
         <SubHeader numberFoundFilms={foundFilmsList.length}>
-          <SortOptionsContainer/>
+          <SortOptionsContainer />
         </SubHeader>
         <BodyContent>
-          <SearchResults filmList={foundFilmsList} sortedBy={sortOptionsList[selectedSortOptionId]}/>
+          <SearchResults
+            filmList={foundFilmsList}
+            sortedBy={sortOptionsList[selectedSortOptionId]}
+          />
         </BodyContent>
       </ErrorBoundary>
-    )
+    );
   }
 }

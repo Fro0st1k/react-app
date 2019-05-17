@@ -2,15 +2,15 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-const prodMode = process.env.NODE_ENV === "production";
+const prodMode = process.env.NODE_ENV === 'production';
 
 module.exports = {
   entry: {
-    script: './src/index.js',
+    script: './src/index.jsx'
   },
   output: {
     path: path.join(__dirname, '/dist'),
@@ -41,7 +41,7 @@ module.exports = {
           prodMode ? MiniCssExtractPlugin.loader : 'style-loader',
           'css-loader',
           'postcss-loader',
-          'sass-loader',
+          'sass-loader'
         ]
       },
       {
@@ -67,10 +67,10 @@ module.exports = {
                 speed: 4
               },
               gifsicle: {
-                interlaced: false,
+                interlaced: false
               }
-            },
-          },
+            }
+          }
         ]
       }
     ]
@@ -95,7 +95,7 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: "styles.css"
+      filename: 'styles.css'
     })
   ],
   devServer: {
@@ -103,5 +103,5 @@ module.exports = {
     hot: true,
     historyApiFallback: true
   },
-  devtool: prodMode ? '' : 'inline-source-map',
+  devtool: prodMode ? '' : 'inline-source-map'
 };

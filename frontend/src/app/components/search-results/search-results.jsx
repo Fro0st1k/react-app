@@ -4,7 +4,7 @@ import './search-results.scss';
 import { FilmPreview } from '../film-preview/film-preview';
 import { trimReleaseDate } from '../../helpers/trim-release-date';
 
-export const SearchResults = ({filmList, sortedBy}) => {
+export const SearchResults = ({ filmList, sortedBy }) => {
   // todo map in sort-options
   const sortOptions = {
     rating: 'vote_average',
@@ -16,11 +16,10 @@ export const SearchResults = ({filmList, sortedBy}) => {
     const currentSortOpt = sortOptions[sortedBy];
     const needTrim = currentSortOpt === sortOptions.date;
 
-    return [...filmList].sort((a, b) => {
-      return needTrim
+    return [...filmList].sort((a, b) => (
+      needTrim
         ? trimReleaseDate(b[currentSortOpt]) - trimReleaseDate(a[currentSortOpt])
-        : b[currentSortOpt] - a[currentSortOpt];
-    });
+        : b[currentSortOpt] - a[currentSortOpt]));
   }
 
   return !filmList.length
@@ -28,11 +27,8 @@ export const SearchResults = ({filmList, sortedBy}) => {
     : (
       <div className="search-results">
         {
-          sortFilms().map(filmInfo => {
-            return <FilmPreview key={filmInfo.id} filmInfo={filmInfo}/>
-          })
+          sortFilms().map(filmInfo => <FilmPreview key={filmInfo.id} filmInfo={filmInfo} />)
         }
       </div>
-    )
+    );
 };
-

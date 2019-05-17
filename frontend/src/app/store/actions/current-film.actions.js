@@ -1,28 +1,20 @@
 import { httpService } from '../../http/http.service';
 
-export const filmHasError = (hasError) => {
-  return {
-    type: 'FILM_NOT_LOADED',
-    hasError: hasError
-  };
-};
+export const filmHasError = hasError => ({
+  type: 'FILM_NOT_LOADED',
+  hasError
+});
 
-export const filmIsLoading = (isLoading) => {
-  return {
-    type: 'FILM_IS_LOADING',
-    isLoading: isLoading
-  };
-};
+export const filmIsLoading = isLoading => ({
+  type: 'FILM_IS_LOADING',
+  isLoading
+});
 
-export const filmFetchDataSuccess = (filmInfo) => {
-  return {
-    type: 'FILM_FETCH_DATA_SUCCESS',
-    filmInfo
-  };
-};
+export const filmFetchDataSuccess = filmInfo => ({
+  type: 'FILM_FETCH_DATA_SUCCESS',
+  filmInfo
+});
 
-export const fetchFilmAction = (config) => {
-  return (dispatch) => {
-    httpService.fetchFilm(config, dispatch);
-  };
+export const fetchFilmAction = config => (dispatch) => {
+  httpService.fetchFilm(config, dispatch);
 };

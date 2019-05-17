@@ -1,14 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { fetchFilmAction } from '../actions/current-film.actions';
 import { fetchFilmsAction, resetFilmList } from '../actions/films.actions';
-import { connect } from 'react-redux';
 import { FilmPage } from '../../pages/film-page/film-page';
 
-export const FilmPageContainer = (props) => {
-  return <FilmPage {...props} />
-};
+export const FilmPageContainer = props => <FilmPage {...props} />;
 
-const mapStateToProps = ({sort, currentFilm, films}) => {
+const mapStateToProps = ({ sort, currentFilm, films }) => {
   const { sortOptionsList, selectedSortOptionId } = sort;
   const { filmInfo, isLoading } = currentFilm;
   const { foundFilmsList } = films;
@@ -22,12 +20,10 @@ const mapStateToProps = ({sort, currentFilm, films}) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchFilm: (options) => dispatch(fetchFilmAction(options)),
-    fetchFilmsTheSameCategory: (options) => dispatch(fetchFilmsAction(options)),
-    clearFilmList: () => dispatch(resetFilmList())
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  fetchFilm: options => dispatch(fetchFilmAction(options)),
+  fetchFilmsTheSameCategory: options => dispatch(fetchFilmsAction(options)),
+  clearFilmList: () => dispatch(resetFilmList())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilmPageContainer);

@@ -3,7 +3,6 @@ import { filmsFetchDataSuccess, filmsHasError, filmsIsLoading } from '../store/a
 import { filmFetchDataSuccess, filmHasError, filmIsLoading } from '../store/actions/current-film.actions';
 
 class HttpService {
-
   constructor() {
     this.baseURL = 'http://react-cdp-api.herokuapp.com/';
     this.defaultOptions = {

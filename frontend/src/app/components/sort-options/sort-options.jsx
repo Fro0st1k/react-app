@@ -18,5 +18,5 @@ export const SortOptions = ({ sortOptionsList, selectedSortOptionId, changeSort 
         selectItem={selectOption}
       />
     </div>
-  )
+  );
 };

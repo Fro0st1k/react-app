@@ -1,7 +1,7 @@
 import React from 'react';
 import { List } from '../../shared/list/list';
 
-export const SearchOptions = ({searchOptionsList, selectedFilterOptionId, changeFilter}) => {
+export const SearchOptions = ({ searchOptionsList, selectedFilterOptionId, changeFilter }) => {
   const selectFilter = (selectOptionId) => {
     changeFilter(selectOptionId);
   };
@@ -17,6 +17,5 @@ export const SearchOptions = ({searchOptionsList, selectedFilterOptionId, change
         selectItem={selectFilter}
       />
     </div>
-  )
+  );
 };
-

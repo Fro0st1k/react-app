@@ -8,15 +8,11 @@ import { ErrorBoundary } from '../../components/error-bounadary/error-boundary';
 import SortOptionsContainer from '../../store/containers/sort-options-container';
 
 export class FilmPage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.getDataForPage();
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
       this.getDataForPage(this.props.match.params.id);
     }
@@ -27,15 +23,19 @@ export class FilmPage extends React.Component {
   }
 
   getFilm() {
-    this.props.fetchFilm({url: `movies/${this.props.match.params.id}`});
+    this.props.fetchFilm({ url: `movies/${this.props.match.params.id}` });
   }
 
   getFilmsTheSameCategory() {
-    this.props.fetchFilmsTheSameCategory({
+    const { fetchFilmsTheSameCategory, location, filmInfo } = this.props;
+
+    fetchFilmsTheSameCategory({
       url: 'movies',
       params: {
         searchBy: 'genres',
-        search: this.props.location.state ? this.props.location.state.genre : this.props.filmInfo.genres[0]
+        search: location.state
+          ? location.state.genre
+          : filmInfo.genres[0]
       }
     });
   }
@@ -46,19 +46,28 @@ export class FilmPage extends React.Component {
   }
 
   render() {
-    const { sortOptionsList, selectedSortOptionId, filmInfo, filmsSameGenre, filmInfoIsLoading } = this.props;
+    const {
+      sortOptionsList,
+      selectedSortOptionId,
+      filmInfo,
+      filmsSameGenre,
+      filmInfoIsLoading
+    } = this.props;
     return (
       <ErrorBoundary>
         <Header>
-          <FilmOverview filmInfo={filmInfo} isLoading={filmInfoIsLoading}/>
+          <FilmOverview filmInfo={filmInfo} isLoading={filmInfoIsLoading} />
         </Header>
         <SubHeader filmGenre={filmInfo.genres[0]}>
-          <SortOptionsContainer/>
+          <SortOptionsContainer />
         </SubHeader>
         <BodyContent>
-          <SearchResults filmList={filmsSameGenre} sortedBy={sortOptionsList[selectedSortOptionId]}/>
+          <SearchResults
+            filmList={filmsSameGenre}
+            sortedBy={sortOptionsList[selectedSortOptionId]}
+          />
         </BodyContent>
       </ErrorBoundary>
-    )
+    );
   }
 }

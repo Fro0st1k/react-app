@@ -7,20 +7,24 @@ export class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, info) {
-    this.setState({ error: error, errorInfo: info });
+    this.setState({ error, errorInfo: info });
   }
 
   render() {
-    if (this.state.error) {
+    const { error, errorInfo } = this.state;
+    const { children } = this.props;
+
+    if (error) {
       return (
         <>
           <h1>Something went wrong.</h1>
-          {this.state.error && this.state.error.toString()}
-          <br/>
-          {this.state.errorInfo.componentStack}
+          {error && error.toString()}
+          <br />
+          {errorInfo.componentStack}
         </>
       );
     }
-    return this.props.children;
+
+    return children;
   }
 }

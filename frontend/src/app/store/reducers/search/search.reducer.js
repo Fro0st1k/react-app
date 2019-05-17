@@ -1,6 +1,6 @@
 export const initialSearchState = {
   searchOptionsList: ['title', 'genres'],
-  selectedFilterOptionId: 0,
+  selectedFilterOptionId: 0
 };
 
 export const searchReducer = (state = initialSearchState, action = {}) => {

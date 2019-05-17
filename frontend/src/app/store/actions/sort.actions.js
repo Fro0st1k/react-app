@@ -1,6 +1,4 @@
-export const changeSortAction = (id) => {
-  return {
-    type: 'CHANGE_SORT',
-    selectedSortOptionId: id
-  }
-};
+export const changeSortAction = id => ({
+  type: 'CHANGE_SORT',
+  selectedSortOptionId: id
+});
