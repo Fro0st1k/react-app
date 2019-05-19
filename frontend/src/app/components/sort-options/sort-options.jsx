@@ -1,6 +1,42 @@
 import React from 'react';
-import './sort-options.scss';
+import styled from 'styled-components';
 import { List } from '../shared/list/list';
+
+const StyledSortOptions = styled.div`
+  display: flex;
+  position: absolute;
+  right: 0;
+
+  .title {
+    margin-right: 20px;
+    user-select: none;
+  }
+
+  .list-item {
+    cursor: pointer;
+    margin-left: 10px;
+    user-select: none;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &--active {
+      color: ${props => props.theme.fontColors.contrastFontColor};
+    }
+  }
+
+  .list-item,
+  .title {
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .list {
+    display: flex;
+  }
+`;
 
 export const SortOptions = ({ sortOptionsList, selectedSortOptionId, changeSort }) => {
   const selectOption = (selectOptionId) => {
@@ -8,15 +44,15 @@ export const SortOptions = ({ sortOptionsList, selectedSortOptionId, changeSort 
   };
 
   return (
-    <div className="sort-options">
-      <div className="sort-options__title">sort by</div>
+    <StyledSortOptions className="sort-options">
+      <div className="title">sort by</div>
       <List
         itemList={sortOptionsList}
-        listClassName="sort-options__list"
-        itemClassName="sort-options__item"
+        listClassName="list"
+        itemClassName="list-item"
         selectedItemId={selectedSortOptionId}
         selectItem={selectOption}
       />
-    </div>
+    </StyledSortOptions>
   );
 };

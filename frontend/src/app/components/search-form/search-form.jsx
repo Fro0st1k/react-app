@@ -1,17 +1,30 @@
 import React from 'react';
-import './search-from.scss';
-
+import styled from 'styled-components';
 import { Button } from '../shared/button/button';
+
+const StyledSearchFormOptions = styled.form`
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: ${props => props.theme.fontColors.mainFontColor};
+
+  .title {
+    font-size: 18px;
+    margin: 0 auto 30px auto;
+    text-transform: uppercase;
+  }
+`;
 
 export const SearchForm = ({ title, sendForm, ...props }) => {
   const { children } = props;
   return (
-    <form className="search-form">
-      <div className="search-form__title">{title}</div>
-      <div className="search-form__section">
+    <StyledSearchFormOptions className="search-form">
+      <div className="title">{title}</div>
+      <div className="section">
         {children}
       </div>
       <Button onClick={sendForm}>search</Button>
-    </form>
+    </StyledSearchFormOptions>
   );
 };

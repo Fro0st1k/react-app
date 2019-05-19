@@ -1,11 +1,23 @@
 import React from 'react';
-import './search-results.scss';
 
+import styled from 'styled-components';
 import { FilmPreview } from '../film-preview/film-preview';
 import { trimReleaseDate } from '../../helpers/trim-release-date';
 
+const SearchResultsEmpty = styled.div`
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+`;
+
+const SearchResultsWithData = styled.div`
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(4, 240px);
+`;
+
 export const SearchResults = ({ filmList, sortedBy }) => {
-  // todo map in sort-options
   const sortOptions = {
     rating: 'vote_average',
     date: 'release_date'
@@ -23,12 +35,12 @@ export const SearchResults = ({ filmList, sortedBy }) => {
   }
 
   return !filmList.length
-    ? <div className="body-content__empty">No Film Found</div>
+    ? <SearchResultsEmpty>No Film Found</SearchResultsEmpty>
     : (
-      <div className="search-results">
+      <SearchResultsWithData>
         {
           sortFilms().map(filmInfo => <FilmPreview key={filmInfo.id} filmInfo={filmInfo} />)
         }
-      </div>
+      </SearchResultsWithData>
     );
 };

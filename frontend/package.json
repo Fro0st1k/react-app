@@ -14,7 +14,8 @@
     "react-router-dom": "^4.4.0",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
@@ -23,6 +24,7 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.5.0",
     "babel-loader": "^8.0.5",
+    "babel-plugin-styled-components": "^1.10.0",
     "clean-webpack-plugin": "^2.0.0",
     "css-loader": "^2.1.1",
     "cssnano": "^4.1.10",
