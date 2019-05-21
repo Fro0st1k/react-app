@@ -13,6 +13,8 @@ export const ListItem = ({
   );
 
   return (
-    <li onClick={() => onClick(selectedItemId)} className={calcClassName}>{itemName}</li>
+    <li onKeyPress={() => {}} onClick={() => onClick(selectedItemId)} className={calcClassName}>
+      {itemName}
+    </li>
   );
 };
