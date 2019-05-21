@@ -4,6 +4,9 @@ export const StyledSortOptions = styled.div`
   display: flex;
   position: absolute;
   right: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 
   .title {
     margin-right: 20px;

@@ -7,6 +7,8 @@ export const StyledFilmPreview = styled.div`
   font-size: 14px;
   width: 240px;
   color: black;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
 
   .img {
     height: 340px;

@@ -4,6 +4,7 @@ export const StyledButton = styled.button(props => ({
   height: '30px',
   width: '150px',
   backgroundColor: props.theme.blockColors.mainContrastColor,
+  fontFamily: '\'Roboto\', sans-serif',
   textTransform: 'uppercase',
   position: 'absolute',
   cursor: 'pointer',
