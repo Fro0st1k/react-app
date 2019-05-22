@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { FilmPreview } from '../../src/app/components/film-preview/film-preview';
 import StoryRouter from 'storybook-react-router';
+import { withKnobs, object } from '@storybook/addon-knobs';
 
 const filmPreviewProps = {
   title: 'Movie Title',
@@ -20,9 +21,10 @@ const areaStyles = {
 };
 
 storiesOf('Film preview', module)
+  .addDecorator(withKnobs)
   .addDecorator(StoryRouter())
   .add('Default film preview', () => (
     <div style={areaStyles}>
-      <FilmPreview filmInfo={filmPreviewProps} />
+      <FilmPreview filmInfo={object('props', filmPreviewProps)} />
     </div>
   ));

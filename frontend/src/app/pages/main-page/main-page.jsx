@@ -67,7 +67,7 @@ export class MainPage extends React.PureComponent {
   }
 
   render() {
-    const { sortOptionsList, selectedSortOptionId, foundFilmsList } = this.props;
+    const { foundFilmsList } = this.props;
     return (
       <ErrorBoundary>
         <Header>
@@ -80,10 +80,7 @@ export class MainPage extends React.PureComponent {
           <SortOptionsContainer />
         </SubHeader>
         <BodyContent>
-          <SearchResults
-            filmList={foundFilmsList}
-            sortedBy={sortOptionsList[selectedSortOptionId]}
-          />
+          <SearchResults filmList={foundFilmsList} />
         </BodyContent>
       </ErrorBoundary>
     );

@@ -4,6 +4,7 @@ import { fetchFilmsAction } from '../actions/films.actions';
 import { MainPage } from '../../pages/main-page/main-page';
 import { changeSearchFilterAction } from '../actions/filter.actions';
 import { changeSortAction } from '../actions/sort.actions';
+import { sortedFilms } from '../selections/sort-selection';
 
 export const MainPageContainer = props => <MainPage {...props} />;
 
@@ -15,17 +16,16 @@ const routerPropsToQuery = (props) => {
   return searchQuery;
 };
 
-const mapStateToProps = ({ sort, search, films }, routerProps) => {
-  const { sortOptionsList, selectedSortOptionId } = sort;
-  const { searchOptionsList, selectedFilterOptionId } = search;
-  const { foundFilmsList } = films;
+const mapStateToProps = (state, routerProps) => {
+  const { sortOptionsList, selectedSortOptionId } = state.sort;
+  const { searchOptionsList, selectedFilterOptionId } = state.search;
 
   return {
-    sortOptionsList,
-    selectedSortOptionId,
     searchOptionsList,
     selectedFilterOptionId,
-    foundFilmsList,
+    sortOptionsList,
+    selectedSortOptionId,
+    foundFilmsList: sortedFilms(state),
     searchQuery: routerPropsToQuery(routerProps)
   };
 };

@@ -3,20 +3,17 @@ import { connect } from 'react-redux';
 import { fetchFilmAction } from '../actions/current-film.actions';
 import { fetchFilmsAction, resetFilmList } from '../actions/films.actions';
 import { FilmPage } from '../../pages/film-page/film-page';
+import { sortedFilms } from '../selections/sort-selection';
 
 export const FilmPageContainer = props => <FilmPage {...props} />;
 
-const mapStateToProps = ({ sort, currentFilm, films }) => {
-  const { sortOptionsList, selectedSortOptionId } = sort;
-  const { filmInfo, isLoading } = currentFilm;
-  const { foundFilmsList } = films;
+const mapStateToProps = (state) => {
+  const { filmInfo, isLoading } = state.currentFilm;
 
   return {
     filmInfo,
     filmInfoIsLoading: isLoading,
-    sortOptionsList,
-    selectedSortOptionId,
-    filmsSameGenre: foundFilmsList
+    filmsSameGenre: sortedFilms(state)
   };
 };
 

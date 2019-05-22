@@ -47,8 +47,6 @@ export class FilmPage extends React.Component {
 
   render() {
     const {
-      sortOptionsList,
-      selectedSortOptionId,
       filmInfo,
       filmsSameGenre,
       filmInfoIsLoading
@@ -62,10 +60,7 @@ export class FilmPage extends React.Component {
           <SortOptionsContainer />
         </SubHeader>
         <BodyContent>
-          <SearchResults
-            filmList={filmsSameGenre}
-            sortedBy={sortOptionsList[selectedSortOptionId]}
-          />
+          <SearchResults filmList={filmsSameGenre} />
         </BodyContent>
       </ErrorBoundary>
     );
